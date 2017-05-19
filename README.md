@@ -13,13 +13,13 @@ In case someone wants to check it out, it's easiest to use a blank child theme o
 ```php
 <?php
 function my_theme_enqueue_styles() {
-	wp_enqueue_style( 'parent-style', get_stylesheet_uri() );
+	wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 
 	// Theme stylesheet.
 	if ( ! is_customize_preview() ) :
-		wp_enqueue_style( 'child-style', get_template_directory_uri() . '/style.css' );
+		wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css' );
 	else :
-		wp_enqueue_style( 'customizer-style', get_template_directory_uri() . '/sass_output/style.css' );
+		wp_enqueue_style( 'customizer-style', get_stylesheet_directory_uri() . '/sass_output/style.css' );
 	endif;
 }
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );

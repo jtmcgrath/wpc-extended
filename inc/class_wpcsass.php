@@ -328,7 +328,7 @@ class WPC_Sass {
 			if ( ! array_key_exists( 'panel', $data ) ) :
 				$this->add_panel( "WPC_Sass", 50, "WPC_Sass" );
 				$data['panel'] = "WPC_Sass";
-			else :
+			endif;
 
 			$this->add_section( $section_id, $data['priority'], $data['title'], $data['panel'] );
 		endforeach;
