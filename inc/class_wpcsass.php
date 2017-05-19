@@ -112,10 +112,10 @@ class WPC_Sass {
 			'type'      => 'radio',
 			'default'   => 'cover',
 			'choices'   => array(
-	   	        'auto'    => 'Auto',
-	   	        'cover'   => 'Cover',
-	   	        'contain' => 'Contain'
-	   	    ),
+				'auto'    => 'Auto',
+				'cover'   => 'Cover',
+				'contain' => 'Contain'
+			),
 			'attribute' => 'background-size'
 		)
 	);
@@ -328,7 +328,9 @@ class WPC_Sass {
 			if ( ! array_key_exists( 'panel', $data ) ) :
 				$this->add_panel( "WPC_Sass", 50, "WPC_Sass" );
 				$data['panel'] = "WPC_Sass";
-			endif;
+			else :
+
+			$this->add_section( $section_id, $data['priority'], $data['title'], $data['panel'] );
 		endforeach;
 	}
 
@@ -433,7 +435,9 @@ class WPC_Sass {
 		if ( array_key_exists('section', $data ) ) :
 			$data['section'] = $this->namespace . $data['section'];
 		endif;
-		$wp_customize->add_setting( $this->namespace . $setting_id, array(
+		$setting_id = $this->namespace . $setting_id;
+
+		$wp_customize->add_setting( $setting_id, array(
 			'default' => $data['default']
 		) );
 
@@ -443,11 +447,11 @@ class WPC_Sass {
 				$wp_customize->add_control(
 					new WPCSASS_Insert_HTML(
 						$wp_customize,
-						$this->namespace . $setting_id,
+						$setting_id,
 						array(
 							'label'    => '<h1 class="wpcsass_title">' . $data['label'] . '</h1>',
 							'section'  => $data['section'],
-							'settings' => $this->namespace . $setting_id
+							'settings' => $setting_id
 						)
 					)
 				);
@@ -457,11 +461,11 @@ class WPC_Sass {
 				$wp_customize->add_control(
 					new WPCSASS_Insert_HTML(
 						$wp_customize,
-						$this->namespace . $setting_id,
+						$setting_id,
 						array(
 							'label'    => '<h3 class="wpcsass_subtitle">' . $data['label'] . '</h3>',
 							'section'  => $data['section'],
-							'settings' => $this->namespace . $setting_id
+							'settings' => $setting_id
 						)
 					)
 				);
@@ -471,11 +475,11 @@ class WPC_Sass {
 				$wp_customize->add_control(
 					new WPCSASS_Insert_HTML(
 						$wp_customize,
-						$this->namespace . $setting_id,
+						$setting_id,
 						array(
 							'description' => $data['description'],
 							'section'     => $data['section'],
-							'settings'    => $this->namespace . $setting_id
+							'settings'    => $setting_id
 						)
 					)
 				);
@@ -487,11 +491,11 @@ class WPC_Sass {
 					$wp_customize->add_control(
 						new Customize_Alpha_Color_Control(
 							$wp_customize,
-							$this->namespace . $setting_id,
+							$setting_id,
 							array(
 								'label'    => $data['label'],
 								'section'  => $data['section'],
-								'settings' => $this->namespace . $setting_id
+								'settings' => $setting_id
 							)
 						)
 					);
@@ -499,11 +503,11 @@ class WPC_Sass {
 					$wp_customize->add_control(
 						new WP_Customize_Color_Control(
 							$wp_customize,
-							$this->namespace . $setting_id,
+							$setting_id,
 							array(
 								'label'    => $data['label'],
 								'section'  => $data['section'],
-								'settings' => $this->namespace . $setting_id
+								'settings' => $setting_id
 							)
 						)
 					);
@@ -514,11 +518,11 @@ class WPC_Sass {
 				$wp_customize->add_control(
 					new WPCSASS_Radio(
 						$wp_customize,
-						$this->namespace . $setting_id,
+						$setting_id,
 						array(
 							'label'    => $data['label'],
 							'section'  => $data['section'],
-							'settings' => $this->namespace . $setting_id,
+							'settings' => $setting_id,
 							'type'     => $data['type'],
 							'choices'  => $data['choices']
 						)
@@ -530,11 +534,11 @@ class WPC_Sass {
 				$wp_customize->add_control(
 					new WP_Customize_Control(
 						$wp_customize,
-						$this->namespace . $setting_id,
+						$setting_id,
 						array(
 							'label'    => $data['label'],
 							'section'  => $data['section'],
-							'settings' => $this->namespace . $setting_id,
+							'settings' => $setting_id,
 							'type'     => $data['type'],
 							'choices'  => $data['choices']
 						)
@@ -546,11 +550,11 @@ class WPC_Sass {
 				$wp_customize->add_control(
 					new WP_Customize_Image_Control(
 						$wp_customize,
-						$this->namespace . $setting_id,
+						$setting_id,
 						array(
 							'label'    => $data['label'],
 							'section'  => $data['section'],
-							'settings' => $this->namespace . $setting_id
+							'settings' => $setting_id
 						)
 					)
 				);
@@ -560,11 +564,11 @@ class WPC_Sass {
 				$wp_customize->add_control(
 					new WPCSASS_Range(
 						$wp_customize,
-						$this->namespace . $setting_id,
+						$setting_id,
 						array(
 							'label'       => $data['label'],
 							'section'     => $data['section'],
-							'settings'    => $this->namespace . $setting_id,
+							'settings'    => $setting_id,
 							'description' => $data['units'],
 							'input_attrs' => array(
 								'min'  => $data['range']['min'],
