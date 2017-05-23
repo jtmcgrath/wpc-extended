@@ -11,6 +11,27 @@ class WPC_Sass {
 	var $namespace = 'wpcsass_';
 
 	/**
+	 * Sass entry point.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var array
+	 */
+	public $sass_entry_point = 'style.scss';
+
+	/**
+	 * Sets Sass entry point.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param string $filename Filename for the Sass entry point.
+	 */
+	public function set_sass_entry_point( $filename ) {
+		$this->sass_entry_point = $filename;
+	}
+
+	/**
 	 * Panels to be added to the Customizer.
 	 *
 	 * @since 1.0.0
@@ -204,10 +225,10 @@ class WPC_Sass {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param string $path Location for the Sass vardump file
+	 * @param string $file Location for the Sass vardump file
 	 */
-	public function set_sass_vardump( $path ) {
-		$this->file_sass_vardump = $path;
+	public function set_sass_vardump( $file ) {
+		$this->file_sass_vardump = $file;
 	}
 
 	/**
@@ -235,7 +256,7 @@ class WPC_Sass {
 	}
 
 	/**
-	 * Adds or updates Customizer panels.
+	 * Adds or updates a Customizer panel.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -293,7 +314,7 @@ class WPC_Sass {
 
 
 	/**
-	 * Adds or updates Customizer sections.
+	 * Adds or updates a Customizer section.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -344,7 +365,7 @@ class WPC_Sass {
 	}
 
 	/**
-	 * Adds or updates existing settings.
+	 * Adds or updates an existing setting.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -603,6 +624,22 @@ class WPC_Sass {
 					)
 				);
 				break;
+
+			default:
+				$wp_customize->add_control(
+					new WP_Customize_Control(
+						$wp_customize,
+						$setting_id,
+						array(
+							'label'    => $data['label'],
+							'section'  => $data['section'],
+							'settings' => $setting_id,
+							'type'     => $data['type'],
+							'default'  => $data['default']
+						)
+					)
+				);
+				break;
 		endswitch;
 	}
 
@@ -660,7 +697,7 @@ class WPC_Sass {
 		$scss->setVariables( $variables );
 
 		// Save css to file.
-		file_put_contents( $this->file_sass_output, $scss->compile( '@import "style.scss"' ) );
+		file_put_contents( $this->file_sass_output, $scss->compile( '@import "' . $this->sass_entry_point . '"' ) );
 	}
 
 	/**
