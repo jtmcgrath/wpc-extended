@@ -26,7 +26,7 @@ This experimental plugin allows user settings in the WordPress Customizer to aut
    - [Add Settings](https://github.com/jtmcgrath/wpcsass#add-settings)
    - [Options Usage](https://github.com/jtmcgrath/wpcsass#options-usage)
 5. [Available Controls](https://github.com/jtmcgrath/wpcsass#available-controls)
-   - [Presentation](https://github.com/jtmcgrath/wpcsass#presentation) *- [Title](https://github.com/jtmcgrath/wpcsass#title), [Description](https://github.com/jtmcgrath/wpcsass#description)* [Subtitle](https://github.com/jtmcgrath/wpcsass#subtitle)
+   - [Presentation](https://github.com/jtmcgrath/wpcsass#presentation) *- [Title](https://github.com/jtmcgrath/wpcsass#title), [Description](https://github.com/jtmcgrath/wpcsass#description), [Subtitle](https://github.com/jtmcgrath/wpcsass#subtitle)*
    - [Range](https://github.com/jtmcgrath/wpcsass#range)
    - [Radio](https://github.com/jtmcgrath/wpcsass#radio)
    - [Background Section](https://github.com/jtmcgrath/wpcsass#background-section)
