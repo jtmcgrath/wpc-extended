@@ -38,6 +38,15 @@ class WPC_Sass {
 	public $settings = array();
 
 	/**
+	 * Settings added to the Customizer programatically.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var array
+	 */
+	private $dynamic_settings = array();
+
+	/**
 	 * Comment setting types.
 	 *
 	 * @since 1.0.0
@@ -63,7 +72,7 @@ class WPC_Sass {
 			'type'      => 'color',
 			'attribute' => 'background-color'
 		),
-		'_image' => array(
+		'_bgimage' => array(
 			'label'   => 'Image',
 			'type'    => 'image',
 			'default' => ''
@@ -348,6 +357,19 @@ class WPC_Sass {
 	}
 
 	/**
+	 * Adds or updates existing dynamic settings.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param string $setting_id Id of the setting to add or update
+	 * @param string $data       An associative array containing arguments for the setting
+	 */
+	private function add_dynamic_setting( $setting_id, $data ) {
+		$this->dynamic_settings[ $setting_id ] = $data;
+	}
+
+	/**
 	 * Adds or updates multiple settings.
 	 *
 	 * @since 1.0.0
@@ -373,9 +395,6 @@ class WPC_Sass {
 		// Ensure at least one panel will be added.
 		$this->test_panels();
 
-		// Load custom controls.
-		require_once plugin_dir_path( __FILE__ ) . 'custom_controls.php';
-
 		// Add panels to Customizer
 		foreach ( $this->panels as $panel_id => $data ) {
 			$wp_customize->add_panel( $this->namespace . $panel_id, $data );
@@ -400,7 +419,10 @@ class WPC_Sass {
 					$_data = $setting_data;
 
 					// Concatenate labels.
-					$_data['label'] = $data['label'] . $setting_data['label'];
+					$_data['label'] = $data['label'] . ' ' . $setting_data['label'];
+
+					// Set section.
+					$_data['section'] = $data['section'];
 
 					// Get default value for colour sub-setting.
 					if ( $setting_suffix === '_color') :
@@ -414,6 +436,7 @@ class WPC_Sass {
 					endif;
 
 					$this->add_control( $wp_customize, $_setting_id, $_data );
+					$this->add_dynamic_setting( $_setting_id, $_data );
 				endforeach;
 			else :
 				$this->add_control( $wp_customize, $setting_id, $data );
@@ -432,6 +455,7 @@ class WPC_Sass {
 	 * @param array  $data         Setting data
 	 */
 	private function add_control( $wp_customize, $setting_id, $data ) {
+
 		if ( array_key_exists('section', $data ) ) :
 			$data['section'] = $this->namespace . $data['section'];
 		endif;
@@ -589,21 +613,29 @@ class WPC_Sass {
 	 * @since 1.0.0
 	 */
 	public function compile() {
+		$all_settings = array_merge( $this->settings, $this->dynamic_settings );
+
 		$variables = array();
 		$var_dump = "";
-		foreach ( $this->settings as $setting_id => $data ) :
+		foreach ( $all_settings as $setting_id => $data ) :
 			if ( $data['type'] === 'title' ) :
 				// Add label to string as comment.
 				$var_dump .= "\n// " . $data['label'] . "\n";
 			elseif ( $data['type'] === 'subtitle' ) :
 				// Add label to string as comment.
 				$var_dump .= "// " . $data['label'] . "\n";
+			elseif ( $data['type'] === 'background_section' ) :
+			  continue;
 			elseif ( ! in_array( $data['type'], $this->comment_types ) ) :
 				// Get setting value
 				$value = get_theme_mod( $this->namespace . $setting_id, $data['default'] );
 
 				if ( $data['type'] === 'image' ) :
 					$value = "'" . $value . "'";
+				endif;
+
+				if ( $data['units'] ) :
+					$value += $data['units'];
 				endif;
 
 				// Add value to results array
@@ -651,7 +683,7 @@ class WPC_Sass {
 
 		$this->set_sass_input_directory( $template_directory . '/sass/' );
 		$this->set_sass_output_directory( $template_directory . '/sass_output/' );
-		$this->set_sass_vardump( $this->file_sass_output_directory . '_customizer_variables.scss' );
+		$this->set_sass_vardump( $this->file_sass_input_directory . '_customizer_variables.scss' );
 		$this->set_sass_output( $this->file_sass_output_directory . 'style.css' );
 		$this->set_live_css_location( $template_directory . '/style.css' );
 

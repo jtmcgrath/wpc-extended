@@ -48,14 +48,14 @@ class Customize_Alpha_Color_Control extends WP_Customize_Control {
 	public function enqueue() {
 		wp_enqueue_script(
 			'alpha-color-picker',
-			get_stylesheet_directory_uri() . '/inc/customizer/alpha-color-picker/alpha-color-picker.js',
+			plugins_url() . '/wpcsass/inc/alpha-color-picker/alpha-color-picker.js',
 			array( 'jquery', 'wp-color-picker' ),
 			'1.0.0',
 			true
 		);
 		wp_enqueue_style(
 			'alpha-color-picker',
-			get_stylesheet_directory_uri() . '/inc/customizer/alpha-color-picker/alpha-color-picker.css',
+			plugins_url() . '/wpcsass/inc/alpha-color-picker/alpha-color-picker.css',
 			array( 'wp-color-picker' ),
 			'1.0.0'
 		);
