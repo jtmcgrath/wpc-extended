@@ -75,6 +75,15 @@ endif;
 
 
 
+if ( ! function_exists('wpcsass_customizer-admin-js') ) :
+function wpcsass_customizer() {
+    wp_enqueue_script( 'customizer-admin', plugins_url() . '/wpcsass/js/customizer-admin.js', array(), true, true );
+}
+add_action( 'customize_controls_enqueue_scripts', 'wpcsass_customizer' );
+endif;
+
+
+
 if ( ! function_exists( 'wpcsass_customizer_stylesheet' ) ) :
 function wpcsass_customizer_stylesheet() { ?>
 <style type="text/css">
