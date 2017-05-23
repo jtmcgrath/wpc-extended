@@ -280,19 +280,19 @@ function theme_wpcsass( $wp_customize ) {
 	$wpcsass->add_panel( 'custom_panel', 50, 'Custom Panel' );
 	$wpcsass->add_section( 'custom_section', 50, 'Test Section', 'custom_panel' );
 	$wpcsass->add_settings( array(
-        'colour', array(
-            'label'   => 'Colour',
-            'section' => 'custom_section',
-            'type'    => 'colour',
-            'default' => #444
-        ),
-        'text', array(
-            'label'   => 'Text',
-            'section' => 'custom_section',
-            'type'    => 'text',
-            'default' => 'something'
-        )
-    ) );
+		'colour', array(
+			'label'   => 'Colour',
+			'section' => 'custom_section',
+			'type'    => 'colour',
+			'default' => #444
+		),
+		'text', array(
+			'label'   => 'Text',
+			'section' => 'custom_section',
+			'type'    => 'text',
+			'default' => 'something'
+		)
+	) );
 
 }
 add_action( 'customize_register', 'theme_wpcsass', 1 );
@@ -314,9 +314,9 @@ Adds a stylised `<h1>` tag containing a label.
 
 ```php
 'title_setting' => array(
-    'label'   => 'Example Title',
-    'section' => 'custom_section',
-    'type'    => 'title'
+	'label'   => 'Example Title',
+	'section' => 'custom_section',
+	'type'    => 'title'
 )
 ```
 
@@ -326,9 +326,9 @@ Adds a stylised `<h3>` tag containing a label.
 
 ```php
 'subtitle_setting' => array(
-    'label'   => 'Example Subtitle',
-    'section' => 'custom_section',
-    'type'    => 'subtitle'
+	'label'   => 'Example Subtitle',
+	'section' => 'custom_section',
+	'type'    => 'subtitle'
 )
 ```
 
@@ -338,9 +338,9 @@ Adds a `<p>` tag containing text.
 
 ```php
 'description_setting' => array(
-    'description'   => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'section' => 'custom_section',
-    'type'    => 'description'
+	'description'   => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+	'section' => 'custom_section',
+	'type'    => 'description'
 )
 ```
 
@@ -352,16 +352,16 @@ The range control allows you to create a slider with minimum and maximum values.
 
 ```php
 'range_setting' => array(
-    'label'   => 'Range',
-    'section' => 'custom_section',
-    'type'    => 'range',
-    'default' => '3',
-    'units'   => 'px',
-    'range'   => array(
-        'min'  => '0',
-        'max'  => '20',
-        'step' => '1'
-    )
+	'label'   => 'Range',
+	'section' => 'custom_section',
+	'type'    => 'range',
+	'default' => '3',
+	'units'   => 'px',
+	'range'   => array(
+		'min'  => '0',
+		'max'  => '20',
+		'step' => '1'
+	)
 )
 ```
 
@@ -373,15 +373,15 @@ The radio control adds some cleaner presentation to the typical radio functional
 
 ```php
 'radio_setting_3' => array(
-    'label'   => 'Radio 3',
-    'section' => 'custom_section',
-    'type'    => 'radio',
-    'choices' => array(
-        'a' => 'Option A',
-        'b' => 'Option B',
-        'c' => 'Option C',
-      	'd' => 'Option D'
-    )
+	'label'   => 'Radio 3',
+	'section' => 'custom_section',
+	'type'    => 'radio',
+	'choices' => array(
+		'a' => 'Option A',
+		'b' => 'Option B',
+		'c' => 'Option C',
+		'd' => 'Option D'
+	)
 )
 ```
 
@@ -397,11 +397,11 @@ It includes a colour control, an image control, and several radio controls. The 
 
 ```php
 'background_setting' => array(
-    'label'   => 'Background',
-    'section' => 'custom_section',
-    'type'    => 'background_section',
-    'alpha'   => true,
-    'default' => '#444'
+	'label'   => 'Background',
+	'section' => 'custom_section',
+	'type'    => 'background_section',
+	'alpha'   => true,
+	'default' => '#444'
 )
 ```
 
@@ -413,11 +413,11 @@ The alpha colour control was created by Braad Martin, [and is available on GitHu
 
 ```php
 'alpha_setting' => array(
-    'label'   => 'Alpha Colour',
-    'section' => 'custom_section',
-    'type'    => 'colour',
-    'alpha'   => true,
-    'default' => '#444'
+	'label'   => 'Alpha Colour',
+	'section' => 'custom_section',
+	'type'    => 'colour',
+	'alpha'   => true,
+	'default' => '#444'
 )
 ```
 
@@ -431,10 +431,10 @@ The standard Customizer controls are also available.
 
 ```php
 'colour_setting' => array(
-    'label'   => 'Standard Colour',
-    'section' => 'custom_section',
-    'type'    => 'colour',
-    'default' => '#444'
+	'label'   => 'Standard Colour',
+	'section' => 'custom_section',
+	'type'    => 'colour',
+	'default' => '#444'
 )
 ```
 
@@ -442,10 +442,10 @@ The standard Customizer controls are also available.
 
 ```php
 'text_setting' => array(
-    'label'   => 'Text',
-    'section' => 'custom_section',
-    'type'    => 'text',
-    'default' => 'default'
+	'label'   => 'Text',
+	'section' => 'custom_section',
+	'type'    => 'text',
+	'default' => 'default'
 )
 ```
 
@@ -453,9 +453,9 @@ The standard Customizer controls are also available.
 
 ```php
 'checkbox_setting' => array(
-    'label'   => 'Checkbox',
-    'section' => 'custom_section',
-    'type'    => 'checkbox'
+	'label'   => 'Checkbox',
+	'section' => 'custom_section',
+	'type'    => 'checkbox'
 )
 ```
 
@@ -463,14 +463,14 @@ The standard Customizer controls are also available.
 
 ```php
 'select_setting' => array(
-    'label'   => 'Select',
-    'section' => 'custom_section',
-    'type'    => 'select',
-    'choices' => array(
-        'a' => 'Option A',
-        'b' => 'Option B',
-        'c' => 'Option C'
-    )
+	'label'   => 'Select',
+	'section' => 'custom_section',
+	'type'    => 'select',
+	'choices' => array(
+		'a' => 'Option A',
+		'b' => 'Option B',
+		'c' => 'Option C'
+	)
 )
 ```
 
@@ -478,9 +478,9 @@ The standard Customizer controls are also available.
 
 ```php
 'textarea_setting' => array(
-    'label'   => 'Textarea',
-    'section' => 'custom_section',
-  	'type'    => 'textarea'
+	'label'   => 'Textarea',
+	'section' => 'custom_section',
+	'type'    => 'textarea'
 )
 ```
 
@@ -488,9 +488,9 @@ The standard Customizer controls are also available.
 
 ```php
 'image_setting' => array(
-    'label'   => 'Image',
-    'section' => 'custom_section',
-    'type'    => 'image'
+	'label'   => 'Image',
+	'section' => 'custom_section',
+	'type'    => 'image'
 )
 ```
 
@@ -538,7 +538,7 @@ This example adds a custom section and a custom panel, and demonstrates all of t
 ```php
 
 function theme_wpcsass( $wp_customize ) {
-  $wpcsass = new WPC_Sass;
+	$wpcsass = new WPC_Sass;
 
 	$wpcsass->add_panel( 'custom_panel', 50, 'Custom Panel' );
 	$wpcsass->add_section( 'custom_section', 50, 'Custom Section', 'custom_panel' );
@@ -565,10 +565,10 @@ function theme_wpcsass( $wp_customize ) {
 			'default' => '3',
 			'units'   => 'px',
 			'range'   => array(
-					'min'  => '0',
-					'max'  => '20',
-					'step' => '1'
-			),
+				'min'  => '0',
+				'max'  => '20',
+				'step' => '1'
+			)
 		),
 		'radio_setting' => array(
 			'label'   => 'Radio',
