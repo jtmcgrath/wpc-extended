@@ -367,7 +367,7 @@ The range control allows you to create a slider with minimum and maximum values.
 
 ### Radio
 
-The radio control adds some cleaner presentation to the typical radio functionality. Options are wrapped intelligently, showing either two or three per line depending on the total number. The labels are styled to match the Customizer's button style, witht the addition of a checkmark on the selected option.
+The radio control adds some cleaner presentation to the typical radio functionality. Options are wrapped intelligently, showing either two or three per line depending on the total number. The labels are styled to match the Customizer's button style, with the addition of a checkmark on the selected option.
 
 ![Radio Control](http://i.imgur.com/LGa1SB9.png)
 
