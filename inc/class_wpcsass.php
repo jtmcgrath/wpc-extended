@@ -251,7 +251,7 @@ class WPC_Sass {
 	 *
 	 * @param string $file Location for the live css file
 	 */
-	public function set_live_css_location( $file ) {
+	public function set_live_stylesheet( $file ) {
 		$this->file_live_css = $file;
 	}
 
@@ -737,7 +737,7 @@ class WPC_Sass {
 		$this->set_sass_output_directory( $template_directory . '/sass_output/' );
 		$this->set_sass_vardump( $this->file_sass_input_directory . '_customizer_variables.scss' );
 		$this->set_sass_output( $this->file_sass_output_directory . 'style.css' );
-		$this->set_live_css_location( $template_directory . '/style.css' );
+		$this->set_live_stylesheet( $template_directory . '/style.css' );
 
 		add_action( 'customize_register', array( $this, 'register' ) );
 		add_action( 'customize_preview_init', array( $this, 'compile') );

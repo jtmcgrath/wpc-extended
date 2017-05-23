@@ -10,34 +10,35 @@ Once set up, this plugin passes WordPress Customizer variables directly to Sass.
 
 When you click the `Save & Publish` button in the Customizer, the plugin pushes the changed css live by replacing the theme's stylesheet with the newly compiled css. The most recent version of the stylesheet is also saved as a backup.
 
-## Theme Setup
+## Default Configuration
 
-### Default Configuration
+By default, the plugin looks for a file located at `theme_directory/sass/style.scss` as its entry point, and stores the temporary compiled css into a file located at `theme_directory/sass_output/style.css`. The files are generated automatically, so for the basic setup you only need to carry out these steps:
 
-By default, the plugin looks for a file located at `theme_directory/sass/style.scss` as its entry point, and stores the temporary compiled css into a folder: `theme_directory/sass_output/`. The files are generated automatically, so for the basic setup you only need to carry out these steps:
-
-1. Add the following subdirectories to your theme's directory:
+1. Install and activate the plugin.
+2. Add the following subdirectories to your theme's directory:
 ```
 /sass/
 /sass_output/
 ```
-2. Create a `style.scss` file in the `/sass/` folder.
-3. Add your theme's metadata to the top of the `style.scss` file (either directly or via an `@import` statement).
-4. Create your Scss as desired.
-5. Add options to the Customizer as described [below](#options).
+3. Create a `style.scss` file in the `/sass/` folder.
+4. Add your theme's metadata to the top of the `style.scss` file (either directly or via an `@import` statement).
+5. Create your Scss as desired.
+6. [Add options to the Customizer as described below](#options).
 
 ## Changing settings
 
-You can change several settings to customise the plugin. These are all method calls which
+You can change several settings to customise the plugin. These are all method calls which change variables within the WPCSass object in order to change its behaviour.
 
 ### Set Sass Input Directory
 
 This setting controls the location of the directory which contains your non-compiled `scss` files.
 
-*Default Value*
-`stylesheet_directory/sass/`
+*Default*
+```
+stylesheet_directory/sass/
+```
 
-*Customisation Method*
+*Method*
 ```php
 $wpcsass->set_sass_input_directory( $directory );
 ```
@@ -51,10 +52,12 @@ $wpcsass->set_sass_input_directory( get_stylesheet_directory() . '/sass/' );
 
 This setting controls the entry point filename which the Sass compiler looks for within the *Sass input directory*.
 
-*Default Value*
-`style.scss`
+*Default*
+```
+style.scss
+```
 
-*Customization Method*
+*Method*
 ```php
 $wpcsass->set_sass_entry_point( $filename );
 ```
@@ -68,10 +71,12 @@ $wpcsass->set_sass_entry_point( 'style.scss' );
 
 This setting controls the location of the directory into which the plugin places the generated `css` files.
 
-*Default Value*
-`stylesheet_directory/sass_output/`
+*Default*
+```
+stylesheet_directory/sass_output/
+```
 
-*Customisation Method*
+*Method*
 ```php
 $wpcsass->set_sass_output_directory( $directory );
 ```
@@ -85,10 +90,12 @@ $wpcsass->set_sass_output_directory( get_stylesheet_directory() . '/sass_output/
 
 This setting controls the file location of the Sass vardump file. [Click here for a brief explanation of this file.](#sass-vardump)
 
-*Default Value*
-`stylesheet_directory/sass/_customizer_variables.scss`
+*Default*
+```
+stylesheet_directory/sass/_customizer_variables.scss
+```
 
-*Customisation Method*
+*Method*
 ```php
 $wpcsass->set_sass_vardump( $file );
 ```
@@ -102,10 +109,12 @@ $wpcsass->set_sass_vardump( get_stylesheet_directory() . '/sass/_customizer_vari
 
 This setting controls the file location of the main output file which the plugin generates.
 
-*Default Value*
-`stylesheet_directory/sass_output/style.css`
+*Default*
+```
+stylesheet_directory/sass_output/style.css
+```
 
-*Customisation Method*
+*Method*
 ```php
 $wpcsass->set_sass_output( $file );
 ```
@@ -115,30 +124,32 @@ $wpcsass->set_sass_output( $file );
 $wpcsass->set_sass_output( get_stylesheet_directory() . '/sass_output/style.css' );
 ```
 
-### Set Live CSS location
+### Set Live Stylesheet
 
 This setting controls the location of the live css file which the plugin overwrites when saving.
 
-*Default Value*
-`stylesheet_directory/style.css`
+*Default*
+```
+stylesheet_directory/style.css
+```
 
-*Customisation Method*
+*Method*
 ```php
-$wpcsass->set_live_css_location( $file );
+$wpcsass->set_live_stylesheet( $file );
 ```
 
 *Example*
 ```php
-$wpcsass->set_live_css_location( get_stylesheet_directory() . '/style.css' );
+$wpcsass->set_live_stylesheet( get_stylesheet_directory() . '/style.css' );
 ```
 
 ## Options
 
 ### Basics
 
-To add settings, you need to create a function in your theme's (or plugin's) `functions.php` file, and add that function to the `customize_register` hook with a priority of `1`. This function must accept the `$wp_customize` variable as a parameter, and create an instance of the `WPC_Sass` class.
+To add settings, you need to create a function in your theme's `functions.php` file, and add that function to the `customize_register` hook with a priority of `1`. This function must accept the `$wp_customize` variable as a parameter, and create an instance of the `WPC_Sass` class.
 
-A blank example of what this should look like
+An empty example of what this should look like:
 
 ```php
 function theme_wpcsass( $wp_customize ) {
@@ -267,8 +278,8 @@ function theme_wpcsass( $wp_customize ) {
 	$wpcsass = new WPC_Sass;
 
 	$wpcsass->add_panel( 'custom_panel', 50, 'Custom Panel' );
-    $wpcsass->add_section( 'custom_section', 50, 'Test Section', 'custom_panel' );
-    $wpcsass->add_settings( array(
+	$wpcsass->add_section( 'custom_section', 50, 'Test Section', 'custom_panel' );
+	$wpcsass->add_settings( array(
         'colour', array(
             'label'   => 'Colour',
             'section' => 'custom_section',
