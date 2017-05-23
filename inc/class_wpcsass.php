@@ -15,7 +15,7 @@ class WPC_Sass {
 	 *
 	 * @since 1.0.0
 	 * @access public
-	 * @var array
+	 * @var string
 	 */
 	public $sass_entry_point = 'style.scss';
 
@@ -29,6 +29,27 @@ class WPC_Sass {
 	 */
 	public function set_sass_entry_point( $filename ) {
 		$this->sass_entry_point = $filename;
+	}
+
+	/**
+	 * CSS backup quantity.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var int
+	 */
+	private $css_backup_quantity = 1;
+
+	/**
+	 * Sets CSS backup quantity.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param int $quantity Number of css backup files to create.
+	 */
+	public function set_css_backup_quantity( $quantity ) {
+		$this->css_backup_quantity = $quantity;
 	}
 
 	/**
@@ -721,7 +742,17 @@ class WPC_Sass {
 	 * @since 1.0.0
 	 */
 	public function push_live() {
-		copy( $this->file_live_css, $this->file_live_css . '.backup' );
+		// Get live css file path without the .css extension
+		$target = substr( $this->file_live_css, 0, -4 );
+
+		for ($i = $this->css_backup_quantity; $i > 0; $i--) {
+			if ( $i > 1 ) {
+				$prev = '.backup' . ( $i - 1 );
+			} else {
+				$prev = '';
+			}
+			rename( "$target$prev.css", "$target.backup$i.css" );
+		}
 		copy( $this->file_sass_output, $this->file_live_css );
 	}
 

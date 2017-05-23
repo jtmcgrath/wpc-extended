@@ -8,7 +8,9 @@ This experimental plugin allows user settings in the WordPress Customizer to aut
 
 Once set up, this plugin passes WordPress Customizer variables directly to Sass. It triggers a Sass recompile whenever an option has been changed, with the recompiled css stored in a temporary folder. This allows the new settings to be visible within the customizer preview but not on the live site.
 
-When you click the `Save & Publish` button in the Customizer, the plugin pushes the changed css live by replacing the theme's stylesheet with the newly compiled css. The most recent version of the stylesheet is also saved as a backup.
+When you click the `Save & Publish` button in the Customizer, the plugin pushes the changed css live by replacing the theme's stylesheet with the newly compiled css.
+
+The plugin copies the previous version of the stylesheet as a backup. The number of backups is customisable; the default quantity is 1.
 
 ## Default Configuration
 
@@ -141,6 +143,25 @@ $wpcsass->set_live_stylesheet( $file );
 *Example*
 ```php
 $wpcsass->set_live_stylesheet( get_stylesheet_directory() . '/style.css' );
+```
+
+### Set CSS Backup Quantity
+
+This setting controls the number of backup copies of the `style.css` file that the plugin generates.
+
+*Default*
+```
+1
+```
+
+*Method*
+```php
+set_css_backup_quantity( $quantity );
+```
+
+*Example*
+```php
+set_css_backup_quantity( 3 );
 ```
 
 ## Options
