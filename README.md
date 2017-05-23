@@ -4,6 +4,37 @@ This experimental plugin allows user settings in the WordPress Customizer to aut
 
 **_Note that WPCSass has not been tested thoroughly, and is not intended for production use at present._**
 
+## Contents
+
+1. [How It Works](https://github.com/jtmcgrath/wpcsass#how-it-works)
+2. [Default Configuration](https://github.com/jtmcgrath/wpcsass#default-configuration)
+3. [Changing Settings](https://github.com/jtmcgrath/wpcsass#changing-settings)
+   - [Set Sass Input Directory](https://github.com/jtmcgrath/wpcsass#set-sass-input-directory)
+   - [Set Sass Entry Point](https://github.com/jtmcgrath/wpcsass#set-sass-entry-point)
+   - [Set Sass Output Directory](https://github.com/jtmcgrath/wpcsass#set-sass-output-directory)
+   - [Set Sass Vardump](https://github.com/jtmcgrath/wpcsass#set-sass-vardump)
+   - [Set Sass Output](https://github.com/jtmcgrath/wpcsass#set-sass-output)
+   - [Set Live Stylesheet](https://github.com/jtmcgrath/wpcsass#set-live-stylesheet)
+   - [Set CSS Backup Quantity](https://github.com/jtmcgrath/wpcsass#set-css-backup-quantity)
+4. [Options](https://github.com/jtmcgrath/wpcsass#options)
+   - [Basics](https://github.com/jtmcgrath/wpcsass#basics)
+   - [Add Panel](https://github.com/jtmcgrath/wpcsass#add-panel)
+   - [Add Panels](https://github.com/jtmcgrath/wpcsass#add-panels)
+   - [Add Section](https://github.com/jtmcgrath/wpcsass#add-section)
+   - [Add Sections](https://github.com/jtmcgrath/wpcsass#add-sections)
+   - [Add Setting](https://github.com/jtmcgrath/wpcsass#add-setting)
+   - [Add Settings](https://github.com/jtmcgrath/wpcsass#add-settings)
+   - [Options Usage](https://github.com/jtmcgrath/wpcsass#options-usage)
+5. [Available Controls](https://github.com/jtmcgrath/wpcsass#available-controls)
+   - [Presentation](https://github.com/jtmcgrath/wpcsass#presentation) *- [Title](https://github.com/jtmcgrath/wpcsass#title), [Description](https://github.com/jtmcgrath/wpcsass#description)* [Subtitle](https://github.com/jtmcgrath/wpcsass#subtitle)
+   - [Range](https://github.com/jtmcgrath/wpcsass#range)
+   - [Radio](https://github.com/jtmcgrath/wpcsass#radio)
+   - [Background Section](https://github.com/jtmcgrath/wpcsass#background-section)
+   - [Alpha Colour](https://github.com/jtmcgrath/wpcsass#alpha-colour)
+   - [Standard Controls](https://github.com/jtmcgrath/wpcsass#standard-controls) *- [Colour](https://github.com/jtmcgrath/wpcsass#colour), [Text](https://github.com/jtmcgrath/wpcsass#text), [Checkbox](https://github.com/jtmcgrath/wpcsass#checkbox), [Select](https://github.com/jtmcgrath/wpcsass#select), [Textarea](https://github.com/jtmcgrath/wpcsass#textarea), [Image](https://github.com/jtmcgrath/wpcsass#image)*
+6. [Sass Vardump](https://github.com/jtmcgrath/wpcsass#sass-vardump)
+7. [Comprehensive Example usage](https://github.com/jtmcgrath/wpcsass#comprehensive-example-usage)
+
 ## How It Works
 
 Once set up, this plugin passes WordPress Customizer variables directly to Sass. It triggers a Sass recompile whenever an option has been changed, with the recompiled css stored in a temporary folder. This allows the new settings to be visible within the customizer preview but not on the live site.
@@ -27,7 +58,7 @@ By default, the plugin looks for a file located at `theme_directory/sass/style.s
 5. Create your Scss as desired.
 6. [Add options to the Customizer as described below](#options).
 
-## Changing settings
+## Changing Settings
 
 You can change several settings to customise the plugin. These are all method calls which change variables within the WPCSass object in order to change its behaviour.
 
