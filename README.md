@@ -304,7 +304,7 @@ In addition to the default controls, the plugin includes several custom controls
 
 ### Presentation
 
-This custom control allow you to add presentational text into the layout of the Customizer. It comes in three flavours: **Title**, **Subtitle**, and **Description**.
+This custom control allows you to add presentational text into the layout of the Customizer. It comes in three flavours: **Title**, **Subtitle**, and **Description**.
 
 ![Presentation Controls](http://i.imgur.com/XdTG54h.png)
 
@@ -338,9 +338,9 @@ Adds a `<p>` tag containing text.
 
 ```php
 'description_setting' => array(
-	'description'   => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-	'section' => 'custom_section',
-	'type'    => 'description'
+	'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+	'section'     => 'custom_section',
+	'type'        => 'description'
 )
 ```
 
