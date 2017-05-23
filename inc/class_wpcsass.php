@@ -650,7 +650,14 @@ class WPC_Sass {
 	 * @since 1.0.0
 	 */
 	public function compile() {
-		$all_settings = array_merge( $this->settings, $this->dynamic_settings );
+		$all_settings = array_merge(
+			$this->settings,
+			array( 'wpcsass_backgrounds_title' => array(
+				'label' => 'Background Sections',
+				'type' => 'title'
+			) ),
+			$this->dynamic_settings
+		);
 
 		$variables = array();
 		$var_dump = "";
@@ -667,12 +674,20 @@ class WPC_Sass {
 				// Get setting value
 				$value = get_theme_mod( $this->namespace . $setting_id, $data['default'] );
 
-				if ( $data['type'] === 'image' ) :
+				if ( $data['type'] === 'image' || $data['type'] === 'textarea' ) :
 					$value = "'" . $value . "'";
 				endif;
 
-				if ( $data['units'] ) :
-					$value += $data['units'];
+				if ( $data['type'] === 'checkbox' ) :
+					if ( $value ) :
+						$value = 'true';
+					else :
+						$value = 'false';
+					endif;
+				endif;
+
+				if ( isset( $data['units'] ) ) :
+					$value .= $data['units'];
 				endif;
 
 				// Add value to results array
