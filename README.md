@@ -25,7 +25,7 @@ This experimental plugin allows user settings in the WordPress Customizer to aut
    - [Add Setting](#add-setting)
    - [Add Settings](#add-settings)
    - [Options Usage](#options-usage)
-5. [Get Settings](#get-settings)
+5. [Use Settings In Theme Files](#use-settings-in-theme-files)
 6. [Available Controls](#available-controls)
    - [Presentation](#presentation) *- [Title](#title), [Description](#description), [Subtitle](#subtitle)*
    - [Range](#range)
@@ -346,7 +346,7 @@ if ( class_exists( 'WPC_Sass' ) ) :
 endif;
 ```
 
-## Get Settings
+## Use Settings In Theme Files
 
 In addition to using settings in your Sass files, you can also use them in your theme's php files.
 
