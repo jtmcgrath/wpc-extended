@@ -80,15 +80,6 @@ class WPC_Sass {
 	public $settings = array();
 
 	/**
-	 * Settings added to the Customizer programatically.
-	 *
-	 * @since 1.0.0
-	 * @access private
-	 * @var array
-	 */
-	private $dynamic_settings = array();
-
-	/**
 	 * Comment setting types.
 	 *
 	 * @since 1.0.0
@@ -395,20 +386,36 @@ class WPC_Sass {
 	 * @param string $data       An associative array containing arguments for the setting
 	 */
 	public function add_setting( $setting_id, $data ) {
-		$this->settings[ $setting_id ] = $data;
-	}
+		if ( $data['type'] === 'background_section' ) :
+			foreach ( $this->background_section as $setting_suffix => $setting_data ) :
+				// Create sub-setting id.
+				$_setting_id = $setting_id . $setting_suffix;
 
-	/**
-	 * Adds or updates existing dynamic settings.
-	 *
-	 * @since 1.0.0
-	 * @access private
-	 *
-	 * @param string $setting_id Id of the setting to add or update
-	 * @param string $data       An associative array containing arguments for the setting
-	 */
-	private function add_dynamic_setting( $setting_id, $data ) {
-		$this->dynamic_settings[ $setting_id ] = $data;
+				// Create sub-setting data array.
+				$_data = $setting_data;
+
+				// Concatenate labels.
+				$_data['label'] = $data['label'] . ' ' . $setting_data['label'];
+
+				// Set section.
+				$_data['section'] = $data['section'];
+
+				// Get default value for colour sub-setting.
+				if ( $setting_suffix === '_color') :
+					$data['default'] = $data['default_color'];
+
+					if ( $data['alpha'] ) :
+						$_data['alpha'] = true;
+					endif;
+				else :
+					$_data['default'] = $setting_data['default'];
+				endif;
+
+				$this->settings[ $_setting_id ] = $_data;
+			endforeach;
+		else :
+		  $this->settings[ $setting_id ] = $data;
+		endif;
 	}
 
 	/**
@@ -434,12 +441,7 @@ class WPC_Sass {
 	 * @param string $setting_id Settings to retrieve
 	 */
 	public function get_setting( $setting_id ) {
-		if ( array_key_exists( $setting_id, $this->dynamic_settings ) ) :
-			$data = $this->dynamic_settings[$setting_id];
-		else :
-			$data = $this->settings[$setting_id];
-		endif;
-		var_dump( $setting_id, $this->dynamic_settings, $this->settings );
+		$data = $this->settings[$setting_id];
 		$value = get_theme_mod( $this->namespace . $setting_id, $data['default'] );
 
 		if ( $data['type'] === 'image' || $data['type'] === 'textarea' ) :
@@ -488,37 +490,7 @@ class WPC_Sass {
 
 		// Add settings to Customizer
 		foreach ( $this->settings as $setting_id => $data ) :
-			if ( $data['type'] === 'background_section' ) :
-				foreach ( $this->background_section as $setting_suffix => $setting_data ) :
-					// Create sub-setting id.
-					$_setting_id = $setting_id . $setting_suffix;
-
-					// Create sub-setting data array.
-					$_data = $setting_data;
-
-					// Concatenate labels.
-					$_data['label'] = $data['label'] . ' ' . $setting_data['label'];
-
-					// Set section.
-					$_data['section'] = $data['section'];
-
-					// Get default value for colour sub-setting.
-					if ( $setting_suffix === '_color') :
-						$data['default'] = $data['default_color'];
-
-						if ( $data['alpha'] ) :
-							$_data['alpha'] = true;
-						endif;
-					else :
-						$_data['default'] = $setting_data['default'];
-					endif;
-
-					$this->add_control( $wp_customize, $_setting_id, $_data );
-					$this->add_dynamic_setting( $_setting_id, $_data );
-				endforeach;
-			else :
-				$this->add_control( $wp_customize, $setting_id, $data );
-			endif;
+			$this->add_control( $wp_customize, $setting_id, $data );
 		endforeach;
 	}
 
@@ -707,18 +679,9 @@ class WPC_Sass {
 	 * @since 1.0.0
 	 */
 	public function compile() {
-		$all_settings = array_merge(
-			$this->settings,
-			array( 'wpcsass_backgrounds_title' => array(
-				'label' => 'Background Sections',
-				'type' => 'title'
-			) ),
-			$this->dynamic_settings
-		);
-
 		$variables = array();
 		$var_dump = "";
-		foreach ( $all_settings as $setting_id => $data ) :
+		foreach ( $this->settings as $setting_id => $data ) :
 			if ( $data['type'] === 'title' ) :
 				// Add label to string as comment.
 				$var_dump .= "\n// " . $data['label'] . "\n";
