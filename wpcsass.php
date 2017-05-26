@@ -11,10 +11,11 @@
 
 if ( ! defined( "ABSPATH" ) ) exit; // Exit if accessed directly.
 
+require_once plugin_dir_path( __FILE__ ) . 'inc/class_wpcsass.php';
+
 function wpcsass_init() {
 	if ( is_customize_preview() ) :
 		require_once plugin_dir_path( __FILE__ ) . 'inc/custom_controls.php';
-		require_once plugin_dir_path( __FILE__ ) . 'inc/class_wpcsass.php';
 	endif;
 }
 add_action('wp_loaded', 'wpcsass_init');

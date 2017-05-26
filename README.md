@@ -6,34 +6,35 @@ This experimental plugin allows user settings in the WordPress Customizer to aut
 
 ## Contents
 
-1. [How It Works](https://github.com/jtmcgrath/wpcsass#how-it-works)
-2. [Default Configuration](https://github.com/jtmcgrath/wpcsass#default-configuration)
-3. [Changing Settings](https://github.com/jtmcgrath/wpcsass#changing-settings)
-   - [Set Sass Input Directory](https://github.com/jtmcgrath/wpcsass#set-sass-input-directory)
-   - [Set Sass Entry Point](https://github.com/jtmcgrath/wpcsass#set-sass-entry-point)
-   - [Set Sass Output Directory](https://github.com/jtmcgrath/wpcsass#set-sass-output-directory)
-   - [Set Sass Vardump](https://github.com/jtmcgrath/wpcsass#set-sass-vardump)
-   - [Set Sass Output](https://github.com/jtmcgrath/wpcsass#set-sass-output)
-   - [Set Live Stylesheet](https://github.com/jtmcgrath/wpcsass#set-live-stylesheet)
-   - [Set CSS Backup Quantity](https://github.com/jtmcgrath/wpcsass#set-css-backup-quantity)
-4. [Options](https://github.com/jtmcgrath/wpcsass#options)
-   - [Basics](https://github.com/jtmcgrath/wpcsass#basics)
-   - [Add Panel](https://github.com/jtmcgrath/wpcsass#add-panel)
-   - [Add Panels](https://github.com/jtmcgrath/wpcsass#add-panels)
-   - [Add Section](https://github.com/jtmcgrath/wpcsass#add-section)
-   - [Add Sections](https://github.com/jtmcgrath/wpcsass#add-sections)
-   - [Add Setting](https://github.com/jtmcgrath/wpcsass#add-setting)
-   - [Add Settings](https://github.com/jtmcgrath/wpcsass#add-settings)
-   - [Options Usage](https://github.com/jtmcgrath/wpcsass#options-usage)
-5. [Available Controls](https://github.com/jtmcgrath/wpcsass#available-controls)
-   - [Presentation](https://github.com/jtmcgrath/wpcsass#presentation) *- [Title](https://github.com/jtmcgrath/wpcsass#title), [Description](https://github.com/jtmcgrath/wpcsass#description), [Subtitle](https://github.com/jtmcgrath/wpcsass#subtitle)*
-   - [Range](https://github.com/jtmcgrath/wpcsass#range)
-   - [Radio](https://github.com/jtmcgrath/wpcsass#radio)
-   - [Background Section](https://github.com/jtmcgrath/wpcsass#background-section)
-   - [Alpha Colour](https://github.com/jtmcgrath/wpcsass#alpha-colour)
-   - [Standard Controls](https://github.com/jtmcgrath/wpcsass#standard-controls) *- [Colour](https://github.com/jtmcgrath/wpcsass#colour), [Text](https://github.com/jtmcgrath/wpcsass#text), [Checkbox](https://github.com/jtmcgrath/wpcsass#checkbox), [Select](https://github.com/jtmcgrath/wpcsass#select), [Textarea](https://github.com/jtmcgrath/wpcsass#textarea), [Image](https://github.com/jtmcgrath/wpcsass#image)*
-6. [Sass Vardump](https://github.com/jtmcgrath/wpcsass#sass-vardump)
-7. [Comprehensive Example usage](https://github.com/jtmcgrath/wpcsass#comprehensive-example-usage)
+1. [How It Works](#how-it-works)
+2. [Default Configuration](#default-configuration)
+3. [Changing Settings](#changing-settings)
+   - [Set Sass Input Directory](#set-sass-input-directory)
+   - [Set Sass Entry Point](#set-sass-entry-point)
+   - [Set Sass Output Directory](#set-sass-output-directory)
+   - [Set Sass Vardump](#set-sass-vardump)
+   - [Set Sass Output](#set-sass-output)
+   - [Set Live Stylesheet](#set-live-stylesheet)
+   - [Set CSS Backup Quantity](#set-css-backup-quantity)
+4. [Options](#options)
+   - [Basics](#basics)
+   - [Add Panel](#add-panel)
+   - [Add Panels](#add-panels)
+   - [Add Section](#add-section)
+   - [Add Sections](#add-sections)
+   - [Add Setting](#add-setting)
+   - [Add Settings](#add-settings)
+   - [Options Usage](#options-usage)
+5. [Get Settings](#get-settings)
+6. [Available Controls](#available-controls)
+   - [Presentation](#presentation) *- [Title](#title), [Description](#description), [Subtitle](#subtitle)*
+   - [Range](#range)
+   - [Radio](#radio)
+   - [Background Section](#background-section)
+   - [Alpha Colour](#alpha-colour)
+   - [Standard Controls](#standard-controls) *- [Colour](#colour), [Text](#text), [Checkbox](#checkbox), [Select](#select), [Textarea](#textarea), [Image](#image)*
+7. [Sass Vardump](#sass-vardump)
+8. [Comprehensive Example usage](#comprehensive-example-usage)
 
 ## How It Works
 
@@ -199,18 +200,15 @@ set_css_backup_quantity( 3 );
 
 ### Basics
 
-To add settings, you need to create a function in your theme's `functions.php` file, and add that function to the `customize_register` hook with a priority of `1`. This function must accept the `$wp_customize` variable as a parameter, and create an instance of the `WPC_Sass` class.
-
-An empty example of what this should look like:
+To add settings, you need to create an instance of the `WPC_Sass` class, and then add settings to the object. An empty example of what this should look like:
 
 ```php
-function theme_wpcsass( $wp_customize ) {
+if ( class_exists( 'WPC_Sass' ) ) :
 	$wpcsass = new WPC_Sass;
 
 	// New settings are added here
 
-}
-add_action( 'customize_register', 'theme_wpcsass', 1 );
+endif;
 ```
 
 ### Add Panel
@@ -326,7 +324,7 @@ $wpcsass->add_settings( array(
 Combining all the above, a simple example would be:
 
 ```php
-function theme_wpcsass( $wp_customize ) {
+if ( class_exists( 'WPC_Sass' ) ) :
 	$wpcsass = new WPC_Sass;
 
 	$wpcsass->add_panel( 'custom_panel', 50, 'Custom Panel' );
@@ -345,9 +343,21 @@ function theme_wpcsass( $wp_customize ) {
 			'default' => 'something'
 		)
 	) );
+endif;
+```
 
-}
-add_action( 'customize_register', 'theme_wpcsass', 1 );
+## Get Settings
+
+In addition to using settings in your Sass files, you can also use them in your theme's php files.
+
+*Method*
+```php
+$wpcsass->get_setting( $setting_id );
+```
+
+*Example*
+```php
+$wpcsass->get_setting( 'setting_name' );
 ```
 
 ## Available Controls
@@ -589,140 +599,138 @@ This example adds a custom section and a custom panel, and demonstrates all of t
 
 ```php
 
-function theme_wpcsass( $wp_customize ) {
-	$wpcsass = new WPC_Sass;
+if ( class_exists( 'WPC_Sass' ) ) :
+  $wpcsass = new WPC_Sass;
 
-	$wpcsass->add_panel( 'custom_panel', 50, 'Custom Panel' );
-	$wpcsass->add_section( 'custom_section', 50, 'Custom Section', 'custom_panel' );
-	$wpcsass->add_settings( array(
-		'title_setting' => array(
-			'label'   => 'Example Title',
-			'section' => 'custom_section',
-			'type'    => 'title'
-		),
-		'subtitle_setting' => array(
-			'label'   => 'Example Subtitle',
-			'section' => 'custom_section',
-			'type'    => 'subtitle'
-		),
-		'description_setting' => array(
-			'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-			'section'     => 'custom_section',
-			'type'        => 'description'
-		),
-		'range_setting' => array(
-			'label'   => 'Range',
-			'section' => 'custom_section',
-			'type'    => 'range',
-			'default' => '3',
-			'units'   => 'px',
-			'range'   => array(
-				'min'  => '0',
-				'max'  => '20',
-				'step' => '1'
-			)
-		),
-		'radio_setting' => array(
-			'label'   => 'Radio',
-			'section' => 'custom_section',
-			'type'    => 'radio',
-			'default' => 'a',
-			'choices' => array(
-				'a' => 'Option A',
-				'b' => 'Option B'
-			)
-		),
-		'radio_setting_2' => array(
-			'label'   => 'Radio 2',
-			'section' => 'custom_section',
-			'type'    => 'radio',
-			'default' => 'a',
-			'choices' => array(
-				'a' => 'Option A',
-				'b' => 'Option B',
-				'c' => 'Option C'
-			)
-		),
-		'radio_setting_3' => array(
-			'label'   => 'Radio 3',
-			'section' => 'custom_section',
-			'type'    => 'radio',
-			'default' => 'a',
-			'choices' => array(
-				'a' => 'Option A',
-				'b' => 'Option B',
-				'c' => 'Option C',
-				'd' => 'Option D'
-			)
-		),
-		'radio_setting_4' => array(
-			'label'   => 'Radio 4',
-			'section' => 'custom_section',
-			'type'    => 'radio',
-			'default' => 'a',
-			'choices' => array(
-				'a' => 'Option A',
-				'b' => 'Option B',
-				'c' => 'Option C',
-				'd' => 'Option D',
-				'e' => 'Option E',
-				'f' => 'Option F'
-			)
-		),
-		'background_setting' => array(
-			'label'   => 'Background',
-			'section' => 'custom_section',
-			'type'    => 'background_section',
-			'alpha'   => true,
-			'default' => '#444'
-		),
-		'alpha_setting' => array(
-			'label'   => 'Alpha Colour',
-			'section' => 'custom_section',
-			'type'    => 'colour',
-			'alpha'   => true,
-			'default' => '#444'
-		),
-		'colour_setting' => array(
-			'label'   => 'Standard Colour',
-			'section' => 'custom_section',
-			'type'    => 'colour',
-			'default' => '#444'
-		),
-		'text_setting' => array(
-			'label'   => 'Text',
-			'section' => 'custom_section',
-			'type'    => 'text',
-			'default' => 'default'
-		),
-		'checkbox_setting' => array(
-			'label'   => 'Checkbox',
-			'section' => 'custom_section',
-			'type'    => 'checkbox'
-		),
-		'select_setting' => array(
-			'label'   => 'Select',
-			'section' => 'custom_section',
-			'type'    => 'select',
-			'default' => 'a',
-			'choices' => array(
-				'a' => 'Option A',
-				'b' => 'Option B',
-				'c' => 'Option C'
-			)
-		),
-		'textarea_setting' => array(
-			'label'   => 'Textarea',
-			'section' => 'custom_section',
-			'type'    => 'textarea'
-		),
-		'image_setting' => array(
-			'label'   => 'Image',
-			'section' => 'custom_section',
-			'type'    => 'image'
-		)
-	) );
-
-}
-add_action( 'customize_register', 'theme_wpcsass', 1 );
+  $wpcsass->add_panel( 'custom_panel', 50, 'Custom Panel' );
+  $wpcsass->add_section( 'custom_section', 50, 'Custom Section', 'custom_panel' );
+  $wpcsass->add_settings( array(
+  	'title_setting' => array(
+  		'label'   => 'Example Title',
+  		'section' => 'custom_section',
+  		'type'    => 'title'
+  	),
+  	'subtitle_setting' => array(
+  		'label'   => 'Example Subtitle',
+  		'section' => 'custom_section',
+  		'type'    => 'subtitle'
+  	),
+  	'description_setting' => array(
+  		'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  		'section'     => 'custom_section',
+  		'type'        => 'description'
+  	),
+  	'range_setting' => array(
+  		'label'   => 'Range',
+  		'section' => 'custom_section',
+  		'type'    => 'range',
+  		'default' => '3',
+  		'units'   => 'px',
+  		'range'   => array(
+  			'min'  => '0',
+  			'max'  => '20',
+  			'step' => '1'
+  		)
+  	),
+  	'radio_setting' => array(
+  		'label'   => 'Radio',
+  		'section' => 'custom_section',
+  		'type'    => 'radio',
+  		'default' => 'a',
+  		'choices' => array(
+  			'a' => 'Option A',
+  			'b' => 'Option B'
+  		)
+  	),
+  	'radio_setting_2' => array(
+  		'label'   => 'Radio 2',
+  		'section' => 'custom_section',
+  		'type'    => 'radio',
+  		'default' => 'a',
+  		'choices' => array(
+  			'a' => 'Option A',
+  			'b' => 'Option B',
+  			'c' => 'Option C'
+  		)
+  	),
+  	'radio_setting_3' => array(
+  		'label'   => 'Radio 3',
+  		'section' => 'custom_section',
+  		'type'    => 'radio',
+  		'default' => 'a',
+  		'choices' => array(
+  			'a' => 'Option A',
+  			'b' => 'Option B',
+  			'c' => 'Option C',
+  			'd' => 'Option D'
+  		)
+  	),
+  	'radio_setting_4' => array(
+  		'label'   => 'Radio 4',
+  		'section' => 'custom_section',
+  		'type'    => 'radio',
+  		'default' => 'a',
+  		'choices' => array(
+  			'a' => 'Option A',
+  			'b' => 'Option B',
+  			'c' => 'Option C',
+  			'd' => 'Option D',
+  			'e' => 'Option E',
+  			'f' => 'Option F'
+  		)
+  	),
+  	'background_setting' => array(
+  		'label'   => 'Background',
+  		'section' => 'custom_section',
+  		'type'    => 'background_section',
+  		'alpha'   => true,
+  		'default' => '#444'
+  	),
+  	'alpha_setting' => array(
+  		'label'   => 'Alpha Colour',
+  		'section' => 'custom_section',
+  		'type'    => 'colour',
+  		'alpha'   => true,
+  		'default' => '#444'
+  	),
+  	'colour_setting' => array(
+  		'label'   => 'Standard Colour',
+  		'section' => 'custom_section',
+  		'type'    => 'colour',
+  		'default' => '#444'
+  	),
+  	'text_setting' => array(
+  		'label'   => 'Text',
+  		'section' => 'custom_section',
+  		'type'    => 'text',
+  		'default' => 'default'
+  	),
+  	'checkbox_setting' => array(
+  		'label'   => 'Checkbox',
+  		'section' => 'custom_section',
+  		'type'    => 'checkbox'
+  	),
+  	'select_setting' => array(
+  		'label'   => 'Select',
+  		'section' => 'custom_section',
+  		'type'    => 'select',
+  		'default' => 'a',
+  		'choices' => array(
+  			'a' => 'Option A',
+  			'b' => 'Option B',
+  			'c' => 'Option C'
+  		)
+  	),
+  	'textarea_setting' => array(
+  		'label'   => 'Textarea',
+  		'section' => 'custom_section',
+  		'type'    => 'textarea'
+  	),
+  	'image_setting' => array(
+  		'label'   => 'Image',
+  		'section' => 'custom_section',
+  		'type'    => 'image'
+  	)
+  ) );
+endif;
 ```

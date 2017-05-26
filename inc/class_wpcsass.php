@@ -426,6 +426,42 @@ class WPC_Sass {
 	}
 
 	/**
+	 * Gets the value for a setting.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param string $setting_id Settings to retrieve
+	 */
+	public function get_setting( $setting_id ) {
+		if ( array_key_exists( $setting_id, $this->dynamic_settings ) ) :
+			$data = $this->dynamic_settings[$setting_id];
+		else :
+			$data = $this->settings[$setting_id];
+		endif;
+		var_dump( $setting_id, $this->dynamic_settings, $this->settings );
+		$value = get_theme_mod( $this->namespace . $setting_id, $data['default'] );
+
+		if ( $data['type'] === 'image' || $data['type'] === 'textarea' ) :
+			$value = "'" . $value . "'";
+		endif;
+
+		if ( $data['type'] === 'checkbox' ) :
+			if ( $value ) :
+				$value = 'true';
+			else :
+				$value = 'false';
+			endif;
+		endif;
+
+		if ( isset( $data['units'] ) ) :
+			$value .= $data['units'];
+		endif;
+
+		return $value;
+	}
+
+	/**
 	 * Registers the Customizer settings
 	 *
 	 * @since 1.0.0
@@ -693,23 +729,7 @@ class WPC_Sass {
 			  continue;
 			elseif ( ! in_array( $data['type'], $this->comment_types ) ) :
 				// Get setting value
-				$value = get_theme_mod( $this->namespace . $setting_id, $data['default'] );
-
-				if ( $data['type'] === 'image' || $data['type'] === 'textarea' ) :
-					$value = "'" . $value . "'";
-				endif;
-
-				if ( $data['type'] === 'checkbox' ) :
-					if ( $value ) :
-						$value = 'true';
-					else :
-						$value = 'false';
-					endif;
-				endif;
-
-				if ( isset( $data['units'] ) ) :
-					$value .= $data['units'];
-				endif;
+				$value = $this->get_setting( $setting_id );
 
 				// Add value to results array
 				$variables[$setting_id] = $value;
