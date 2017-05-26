@@ -1,6 +1,6 @@
 ( function( $ ) {
-    function wpcsass_toggle_background_controls() {
-        $( '.customize-control-image' ).filter( '[id*="_bgimage"]' ).each( function() {
+    function wpcsass_toggle_custom_controls() {
+        $( '.customize-control-image' ).filter( '[id$="_bgimage"]' ).each( function() {
             // Grab the element id of the image control.
             var id = $( this ).attr( 'id' );
 
@@ -23,11 +23,21 @@
                 }
             } );
         } );
+
+        $( '.customize-control-radio' ).filter( '[id$="_inherit"]' ).each( function() {
+			var show_control = $( this ).find( 'input[value="inherit"]' ).is( ':checked' );
+
+			if ( show_control ) {
+				$( this ).next().fadeIn();
+			} else {
+				$( this ).next().fadeOut();
+			}
+        } );
     }
 
-    // Shorthand to bind the wpcsass_toggle_background_controls function to the events listed in the array.
+    // Shorthand to bind the wpcsass_toggle_custom_controls function to the events listed in the array.
     [ 'change', 'ready' ].forEach( function( e ) {
-        wp.customize.bind( e, function() { setTimeout(function() { wpcsass_toggle_background_controls(); }, 100 ); } );
+        wp.customize.bind( e, function() { setTimeout(function() { wpcsass_toggle_custom_controls(); }, 100 ); } );
     } );
 
     $( document ).ready( function () {

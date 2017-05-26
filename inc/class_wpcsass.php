@@ -516,6 +516,30 @@ class WPC_Sass {
 				$this->settings[ $_setting_id ] = $_data;
 			endforeach;
 		else :
+			if ( array_key_exists( 'inherit', $data ) ) :
+				// Populate the $_data array for the inherit setting.
+				$_data = array(
+					'label'   => $data['label'],
+					'section' => $data['section'],
+					'type'    => 'radio',
+					'choices' => $data['inherit'],
+					'vardump' => 'inherit'
+				);
+
+				// Reset the options array and set the default to the first option.
+				reset( $data['inherit'] );
+				$_data['default'] = key( $data['inherit'] );
+
+				// Add the current setting_id to the choices array as "Custom".
+				$_data['choices'][$setting_id] = 'Custom';
+
+				// Remove the label from the parent setting.
+				$data['label'] = '';
+
+				// Create inherit setting.
+			  $this->settings[ $setting_id . '_inherit' ] = $_data;
+			endif;
+			$data['vardump'] = $data['type'];
 		  $this->settings[ $setting_id ] = $data;
 		endif;
 	}
@@ -540,9 +564,21 @@ class WPC_Sass {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param string $setting_id Settings to retrieve
+	 * @param string $setting_id     Settings to retrieve
+	 * @param bool   $show_reference Reference a Sass variable instead of a value.
 	 */
-	public function get_setting( $setting_id ) {
+	public function get_setting( $setting_id, $show_reference = false ) {
+		if ( array_key_exists( $setting_id . '_inherit', $this->settings ) ) :
+			$_data = $this->settings[$setting_id . '_inherit'];
+			$_setting_id = get_theme_mod( $this->namespace . $setting_id . '_inherit', $_data['default'] );
+
+			if ( $show_reference && $setting_id !== $_setting_id ) {
+				return '$' . $_setting_id;
+			}
+
+			$setting_id = $_setting_id;
+		endif;
+
 		$data = $this->settings[$setting_id];
 		$value = get_theme_mod( $this->namespace . $setting_id, $data['default'] );
 
@@ -784,20 +820,26 @@ class WPC_Sass {
 		$variables = array();
 		$var_dump = "";
 		foreach ( $this->settings as $setting_id => $data ) :
-			if ( $data['type'] === 'title' ) :
+			if ( $data['vardump'] === 'title' ) :
 				// Add label to string as comment.
 				$var_dump .= "\n// " . $data['label'] . "\n";
-			elseif ( $data['type'] === 'subtitle' ) :
+			elseif ( $data['vardump'] === 'subtitle' ) :
 				// Add label to string as comment.
 				$var_dump .= "// " . $data['label'] . "\n";
 			elseif ( array_key_exists( $data['type'], $this->section_generators ) ) :
 			  continue;
 			elseif ( ! in_array( $data['type'], $this->comment_types ) ) :
 				// Get setting value
-				$value = $this->get_setting( $setting_id );
+				$value = $this->get_setting( $setting_id, true );
 
 				// Add value to results array
 				$variables[$setting_id] = $value;
+				var_dump($data, $value, $this->get_setting( $setting_id ) );
+
+				// Add $ if it's a reference to another variable
+				if ( $data['vardump'] === 'inherit' ) :
+					$value = '$' . $value;
+				endif;
 
 				// Add value to string.
 				$var_dump .= "\$$setting_id: $value;\n";
