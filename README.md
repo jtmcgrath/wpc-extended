@@ -61,7 +61,7 @@ By default, the plugin looks for a file located at `theme_directory/sass/style.s
 
 ## Changing Settings
 
-You can change several settings to customise the plugin. These are all method calls which change variables within the WPCSass object in order to change its behaviour.
+You can change several settings to customise the plugin. These are all method calls which change variables within the WPC_Sass object in order to change its behaviour.
 
 ### Set Sass Input Directory
 
@@ -357,7 +357,7 @@ $wpcsass->get_setting( $setting_id );
 
 *Example*
 ```php
-$wpcsass->get_setting( 'setting_name' );
+$wpcsass->get_setting( 'my_setting' );
 ```
 
 ## Available Controls
@@ -561,8 +561,6 @@ The standard Customizer controls are also available.
 The Sass vardump is a generated file which contains every Sass variable and value passed from the Customizer into Sass. The Sass compiler does not normally display the available variables, so this vardump acts as a convenient cheat-sheet for easy reference when developing themes.
 
 It also includes every `title` and `subtitle` custom control as comments, which helps break down the sections appropriately.
-
-Note that the background-section controls are all listed at the end of the file because they are dynamically generated.
 
 The [Comprehensive Example Usage](#comprehensive-example-usage) below will output the following Sass Vardump file:
 

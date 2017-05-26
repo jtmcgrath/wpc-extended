@@ -93,72 +93,174 @@ class WPC_Sass {
 	);
 
 	/**
-	 * Settings array for the background_section shorthand.
+	 * Array containing details for section generators
 	 *
 	 * @since 1.0.0
 	 * @access private
 	 * @var array
 	 */
-	var $background_section = array(
-		'_color' => array(
-			'label'     => 'Color',
-			'type'      => 'color',
-			'attribute' => 'background-color'
-		),
-		'_bgimage' => array(
-			'label'   => 'Image',
-			'type'    => 'image',
-			'default' => ''
-		),
-		'_repeat' => array(
-			'label'     => 'Repeat',
-			'type'      => 'radio',
-			'default'   => 'no-repeat',
-			'choices'   => array(
-				'no-repeat' => 'No Repeat',
-				'repeat'    => 'Tile',
-				'repeat-x'  => 'Tile Horizontally',
-				'repeat-y'  => 'Tile Vertically'
+	var $section_generators = array(
+		'background_section' => array(
+			'_color' => array(
+				'label'     => 'Color',
+				'type'      => 'color',
+				'attribute' => 'background-color'
 			),
-			'attribute' => 'background-repeat'
-		),
-		'_position' => array(
-			'label'     => 'Position',
-			'type'      => 'radio',
-			'default'   => 'center',
-			'choices'   => array(
-	   			'left top'      => 'Top Left',
-	   			'center top'    => 'Top',
-	   			'right top'     => 'Top Right',
-	   			'left center'   => 'Left',
-	   			'center'        => 'Center',
-	   			'right center'  => 'Right',
-	   			'left bottom'   => 'Bottom Left',
-	   			'center bottom' => 'Bottom',
-	   			'right bottom'  => 'Bottom Right'
-	   		),
-			'attribute' => 'background-position'
-		),
-		'_attachment' => array(
-			'label'     => 'Attachment',
-			'type'      => 'radio',
-			'default'   => 'scroll',
-			'choices'   => array(
-	   			'scroll' => 'Scroll',
-	   			'fixed'  => 'Fixed'
-	   		),
-			'attribute' => 'background-attachment'
-		),
-		'_size' => array(
-			'label'     => 'Size',
-			'type'      => 'radio',
-			'default'   => 'cover',
-			'choices'   => array(
-				'auto'    => 'Auto',
-				'cover'   => 'Cover',
-				'contain' => 'Contain'
+			'_bgimage' => array(
+				'label'   => 'Image',
+				'type'    => 'image',
+				'default' => ''
 			),
-			'attribute' => 'background-size'
+			'_repeat' => array(
+				'label'     => 'Repeat',
+				'type'      => 'radio',
+				'default'   => 'no-repeat',
+				'choices'   => array(
+					'no-repeat' => 'No Repeat',
+					'repeat'    => 'Tile',
+					'repeat-x'  => 'Tile Horizontally',
+					'repeat-y'  => 'Tile Vertically'
+				),
+				'attribute' => 'background-repeat'
+			),
+			'_position' => array(
+				'label'     => 'Position',
+				'type'      => 'radio',
+				'default'   => 'center',
+				'choices'   => array(
+		   			'left top'      => 'Top Left',
+		   			'center top'    => 'Top',
+		   			'right top'     => 'Top Right',
+		   			'left center'   => 'Left',
+		   			'center'        => 'Center',
+		   			'right center'  => 'Right',
+		   			'left bottom'   => 'Bottom Left',
+		   			'center bottom' => 'Bottom',
+		   			'right bottom'  => 'Bottom Right'
+		   		),
+				'attribute' => 'background-position'
+			),
+			'_attachment' => array(
+				'label'     => 'Attachment',
+				'type'      => 'radio',
+				'default'   => 'scroll',
+				'choices'   => array(
+		   			'scroll' => 'Scroll',
+		   			'fixed'  => 'Fixed'
+		   		),
+				'attribute' => 'background-attachment'
+			),
+			'_size' => array(
+				'label'     => 'Size',
+				'type'      => 'radio',
+				'default'   => 'cover',
+				'choices'   => array(
+					'auto'    => 'Auto',
+					'cover'   => 'Cover',
+					'contain' => 'Contain'
+				),
+				'attribute' => 'background-size'
+			)
+		),
+		'border_section' => array(
+			'_width' => array(
+				'label'   => 'Width',
+				'type'    => 'range',
+				'default' => '0',
+				'units'   => 'px',
+				'range'   => array(
+					'min'  => '0',
+					'max'  => '10',
+					'step' => '1'
+				)
+			),
+			'_radius' => array(
+				'label'   => 'Radius',
+				'type'    => 'range',
+				'default' => '0',
+				'units'   => 'px',
+				'range'   => array(
+					'min'  => '0',
+					'max'  => '10',
+					'step' => '1'
+				)
+			),
+			'_color' => array(
+				'label'     => 'Color',
+				'type'      => 'color'
+			),
+			'_style' => array(
+				'label'   => 'Style',
+				'type'    => 'radio',
+				'default' => 'solid',
+				'choices' => array(
+					'none'   => 'None',
+					'dotted' => 'Dotted',
+					'dashed' => 'Dashed',
+					'solid'  => 'Solid',
+					'double' => 'Double',
+					'groove' => 'Groove',
+					'ridge'  => 'Ridge',
+					'inset'  => 'Inset',
+					'outset' => 'Outset'
+				)
+			)
+		),
+		'typography_section' => array(
+			'_font_family' => array(
+				'label'   => 'Font Family',
+				'type'    => 'text',
+				'default' => 'inherit'
+			),
+			'_font_size' => array(
+				'label'   => 'Font Size',
+				'type'    => 'range',
+				'default' => '16',
+				'units'   => 'px',
+				'range'   => array(
+					'min'  => '8',
+					'max'  => '60',
+					'step' => '1'
+				)
+			),
+			'_font_style' => array(
+				'label'   => 'Font Style',
+				'type'    => 'radio',
+				'default' => 'inherit',
+				'choices' => array(
+					'inherit' => 'Inherit',
+					'normal'  => 'Normal',
+					'italic'  => 'Italic',
+					'oblique' => 'Oblique'
+				)
+			),
+			'_font_weight' => array(
+				'label'   => 'Font Weight',
+				'type'    => 'select',
+				'default' => 400,
+				'choices' => array(
+					100 => 'Thin',
+					200 => 'Extra Light',
+					300 => 'Light',
+					400 => 'Normal',
+					500 => 'Medium',
+					600 => 'Semi Bold',
+					700 => 'Bold',
+					800 => 'Extra Bold',
+					900 => 'Black'
+				)
+			),
+			'_line_height' => array(
+				'label'   => 'Line Height',
+				'type'    => 'range',
+				'default' => '1.2',
+				'units'   => '',
+				'range'   => array(
+					'min'  => '0.5',
+					'max'  => '5',
+					'step' => '0.1'
+				)
+			)
 		)
 	);
 
@@ -386,8 +488,8 @@ class WPC_Sass {
 	 * @param string $data       An associative array containing arguments for the setting
 	 */
 	public function add_setting( $setting_id, $data ) {
-		if ( $data['type'] === 'background_section' ) :
-			foreach ( $this->background_section as $setting_suffix => $setting_data ) :
+		if ( array_key_exists( $data['type'], $this->section_generators ) ) :
+			foreach ( $this->section_generators[ $data['type'] ] as $setting_suffix => $setting_data ) :
 				// Create sub-setting id.
 				$_setting_id = $setting_id . $setting_suffix;
 
@@ -402,7 +504,7 @@ class WPC_Sass {
 
 				// Get default value for colour sub-setting.
 				if ( $setting_suffix === '_color') :
-					$data['default'] = $data['default_color'];
+					$_data['default'] = $data['default'];
 
 					if ( $data['alpha'] ) :
 						$_data['alpha'] = true;
@@ -688,7 +790,7 @@ class WPC_Sass {
 			elseif ( $data['type'] === 'subtitle' ) :
 				// Add label to string as comment.
 				$var_dump .= "// " . $data['label'] . "\n";
-			elseif ( $data['type'] === 'background_section' ) :
+			elseif ( array_key_exists( $data['type'], $this->section_generators ) ) :
 			  continue;
 			elseif ( ! in_array( $data['type'], $this->comment_types ) ) :
 				// Get setting value
