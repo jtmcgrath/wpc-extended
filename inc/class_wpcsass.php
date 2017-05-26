@@ -834,7 +834,6 @@ class WPC_Sass {
 
 				// Add value to results array
 				$variables[$setting_id] = $value;
-				var_dump($data, $value, $this->get_setting( $setting_id ) );
 
 				// Add $ if it's a reference to another variable
 				if ( $data['vardump'] === 'inherit' ) :
