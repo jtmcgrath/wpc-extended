@@ -27,10 +27,11 @@ This experimental plugin allows user settings in the WordPress Customizer to aut
    - [Options Usage](#options-usage)
 5. [Using Settings In Theme Files](#use-settings-in-theme-files)
 6. [Available Controls](#available-controls)
+   - [Inherit](#inherit)
    - [Presentation](#presentation) *- [Title](#title), [Description](#description), [Subtitle](#subtitle)*
    - [Range](#range)
    - [Radio](#radio)
-   - [Background Section](#background-section)
+   - [Section Shorthands](#section-shorthands) *- [Background Section](#background-section), [Border Section](#border-section), [Typography Section](#typography-section)*
    - [Alpha Colour](#alpha-colour)
    - [Standard Controls](#standard-controls) *- [Colour](#colour), [Text](#text), [Checkbox](#checkbox), [Select](#select), [Textarea](#textarea), [Image](#image)*
 7. [Sass Vardump](#sass-vardump)
@@ -364,6 +365,42 @@ $wpcsass->get_setting( 'my_setting' );
 
 In addition to the default controls, the plugin includes several custom controls plus a shortcut for creating a comprehensive set of background controls via a single setting. All of the available controls are described below.
 
+### Inherit
+
+The `inherit` setting lets you create a setting which can be set to copy the value of *another* setting.
+
+As an example, many themes would include two main colours which would be used consistently throughout the theme - a `primary` colour and a `secondary` colour. One major downside to the Customizer is that it doesn't support this concept; you would have to enter these colours separately into wherever they are meant to be used.
+
+With the `inherit` setting, you can do this easily. You simply add an `array` to your setting's options containing a list of the settings you want it to be able to reference, and the plugin handles everything for you. It displays the available inherit options as a set of radio buttons, plus a "Custom" option which reveals a separate control when selected which allows the user to specify a non-inherited value.
+
+The `inherit` setting can be added to any of the controls listed below except the `Section Shorthands`.
+
+![Inherit](http://i.imgur.com/uWaSbvi.png)
+
+Setting only:
+
+```php
+'inherit' => array(
+	'primary_colour'   => 'Primary',
+	'secondary_colour' => 'Secondary'
+)
+```
+
+Full example:
+
+```php
+'setting_id' => array(
+	'label'   => 'Custom Setting',
+	'section' => 'custom_section',
+	'type'    => 'colour',
+	'default' => '#444',
+	'inherit' => array(
+		'alpha_setting'  => 'Primary',
+		'colour_setting' => 'Secondary'
+	)
+)
+```
+
 ### Presentation
 
 This custom control allows you to add presentational text into the layout of the Customizer. It comes in three flavours: **Title**, **Subtitle**, and **Description**.
@@ -447,11 +484,13 @@ The radio control adds some cleaner presentation to the typical radio functional
 )
 ```
 
-### Background Section
+### Section Shorthands
 
-The background section is a shorthand which allows you to add multiple connected controls without typing them all in manually.
+The background, border, and typography sections are all shorthands which allow you to add multiple connected controls without typing them all in manually.
 
-It includes a colour control, an image control, and several radio controls. The radio controls are only visible when an image has been selected, because they control the `background-repeat`, `background-position`, `background-attachment`, and `background-size` properties.
+#### Background Section
+
+A background section includes a colour control, an image control, and several radio controls. The radio controls are only visible when an image has been selected, because they control the `background-repeat`, `background-position`, `background-attachment`, and `background-size` properties.
 
 *Note: the background colour control can use either the default or the alpha colour picker.*
 
@@ -464,6 +503,35 @@ It includes a colour control, an image control, and several radio controls. The 
 	'type'    => 'background_section',
 	'alpha'   => true,
 	'default' => '#444'
+)
+```
+
+#### Border Section
+
+A border section includes `border-width`, `border-color`, `border-style`, and `border-radius` controls. The `border-color` and `border-style` controls are hidden when the `border-width` control equals `0`.
+
+![Border Section](http://i.imgur.com/UMDODqk.png)
+
+```php
+'border_setting' => array(
+	'label'   => 'Border',
+	'section' => 'custom_section',
+	'type'    => 'border_section',
+	'default' => #444
+)
+```
+
+#### Typography Section
+
+A typography section includes `font-family`, `font-size`, `font-style`, `font-weight`, and `line-height` controls.
+
+![Typography Section](http://i.imgur.com/wCIDsaP.png)
+
+```php
+'typography_setting' => array(
+	'label'   => 'Typography',
+	'section' => 'custom_section',
+	'type'    => 'typography_section'
 )
 ```
 
