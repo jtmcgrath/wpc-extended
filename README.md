@@ -395,8 +395,8 @@ Full example:
 	'type'    => 'colour',
 	'default' => '#444',
 	'inherit' => array(
-		'alpha_setting'  => 'Primary',
-		'colour_setting' => 'Secondary'
+		'primary_colour'   => 'Primary',
+		'secondary_colour' => 'Secondary'
 	)
 )
 ```
