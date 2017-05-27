@@ -128,16 +128,16 @@ class WPC_Sass {
 				'type'      => 'radio',
 				'default'   => 'center',
 				'choices'   => array(
-		   			'left top'      => 'Top Left',
-		   			'center top'    => 'Top',
-		   			'right top'     => 'Top Right',
-		   			'left center'   => 'Left',
-		   			'center'        => 'Center',
-		   			'right center'  => 'Right',
-		   			'left bottom'   => 'Bottom Left',
-		   			'center bottom' => 'Bottom',
-		   			'right bottom'  => 'Bottom Right'
-		   		),
+					'left top'      => 'Top Left',
+					'center top'    => 'Top',
+					'right top'     => 'Top Right',
+					'left center'   => 'Left',
+					'center'        => 'Center',
+					'right center'  => 'Right',
+					'left bottom'   => 'Bottom Left',
+					'center bottom' => 'Bottom',
+					'right bottom'  => 'Bottom Right'
+				),
 				'attribute' => 'background-position'
 			),
 			'_bgattachment' => array(
@@ -145,9 +145,9 @@ class WPC_Sass {
 				'type'      => 'radio',
 				'default'   => 'scroll',
 				'choices'   => array(
-		   			'scroll' => 'Scroll',
-		   			'fixed'  => 'Fixed'
-		   		),
+					'scroll' => 'Scroll',
+					'fixed'  => 'Fixed'
+				),
 				'attribute' => 'background-attachment'
 			),
 			'_bgsize' => array(
@@ -537,10 +537,10 @@ class WPC_Sass {
 				$data['label'] = '';
 
 				// Create inherit setting.
-			  $this->settings[ $setting_id . '_inherit' ] = $_data;
+				$this->settings[ $setting_id . '_inherit' ] = $_data;
 			endif;
 			$data['vardump'] = $data['type'];
-		  $this->settings[ $setting_id ] = $data;
+			$this->settings[ $setting_id ] = $data;
 		endif;
 	}
 
@@ -827,7 +827,7 @@ class WPC_Sass {
 				// Add label to string as comment.
 				$var_dump .= "// " . $data['label'] . "\n";
 			elseif ( array_key_exists( $data['type'], $this->section_generators ) ) :
-			  continue;
+				continue;
 			elseif ( ! in_array( $data['type'], $this->comment_types ) ) :
 				// Get setting value
 				$value = $this->get_setting( $setting_id, true );

@@ -632,7 +632,7 @@ It also includes every `title` and `subtitle` custom control as comments, which 
 
 The [Comprehensive Example Usage](#comprehensive-example-usage) below will output the following Sass Vardump file:
 
-```css
+```
 
 // Example Title
 // Example Subtitle

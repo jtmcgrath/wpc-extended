@@ -77,7 +77,7 @@ endif;
 
 if ( ! function_exists('wpcsass_customizer-admin-js') ) :
 function wpcsass_customizer() {
-    wp_enqueue_script( 'customizer-admin', plugins_url() . '/wpcsass/js/customizer-admin.js', array(), true, true );
+	wp_enqueue_script( 'customizer-admin', plugins_url() . '/wpcsass/js/customizer-admin.js', array(), true, true );
 }
 add_action( 'customize_controls_enqueue_scripts', 'wpcsass_customizer' );
 endif;
