@@ -31,9 +31,6 @@
 
 			// If the control status has changed...
 			if ( control.status !== show_controls ) {
-
-			// ...and then update the status.
-			control.status = show_controls;
 				// ...toggle all the siblings...
 				control.siblings.forEach( function( target ) {
 					toggle_control( target, show_controls );
