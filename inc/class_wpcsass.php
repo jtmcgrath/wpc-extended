@@ -425,16 +425,19 @@ class WPC_Sass {
 	 * @param string $title    Title of the section
 	 * @param string $panel    Id of the panel the section belongs to
 	 */
-	public function add_section( $section_id, $priority = 50, $title = null, $panel_id ) {
+	public function add_section( $section_id, $priority = 50, $title = null, $panel_id = null ) {
 		if ( null === $title ) :
 			$title = $section_id;
 		endif;
 
 		$this->sections[ $section_id ] = array(
 			'priority' => $priority,
-			'title'    => $title,
-			'panel'    => $panel_id
+			'title'    => $title
 		);
+
+		if ( $panel_id ) :
+			$this->sections[ $section_id ]['panel'] = $panel_id;
+		endif;
 	}
 
 	/**
