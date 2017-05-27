@@ -582,7 +582,7 @@ class WPC_Sass {
 		$data = $this->settings[$setting_id];
 		$value = get_theme_mod( $this->namespace . $setting_id, $data['default'] );
 
-		if ( $data['type'] === 'image' || $data['type'] === 'textarea' ) :
+		if ( $data['type'] === 'image' || $data['type'] === 'textarea' || $value === '' ) :
 			$value = "'" . $value . "'";
 		endif;
 
