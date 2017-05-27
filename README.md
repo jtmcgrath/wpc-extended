@@ -636,26 +636,35 @@ The [Comprehensive Example Usage](#comprehensive-example-usage) below will outpu
 
 // Example Title
 // Example Subtitle
-$range_setting: 10px;
+$range_setting: 3px;
 $radio_setting: a;
 $radio_setting_2: a;
 $radio_setting_3: a;
 $radio_setting_4: a;
-$alpha_setting: rgba(129,215,66,0.61);
-$colour_setting: #1e73be;
+$background_setting_bgcolor: #444444;
+$background_setting_bgimage: '';
+$background_setting_bgrepeat: repeat-y;
+$background_setting_bgposition: left top;
+$background_setting_bgattachment: fixed;
+$background_setting_bgsize: contain;
+$border_setting_borderwidth: 0px;
+$border_setting_bordercolor: '';
+$border_setting_borderstyle: solid;
+$border_setting_borderradius: 0px;
+$typography_setting_font_family: inherit;
+$typography_setting_font_size: 16px;
+$typography_setting_font_style: inherit;
+$typography_setting_font_weight: 400;
+$typography_setting_line_height: 1.2;
+$primary_colour: #444444;
+$secondary_colour: #444444;
+$another_setting_inherit: $primary_colour;
+$another_setting: $primary_colour;
 $text_setting: default;
-$checkbox_setting: true;
+$checkbox_setting: false;
 $select_setting: a;
 $textarea_setting: '';
 $image_setting: '';
-
-// Background Sections
-$background_setting_color: rgba(129,215,66,0.74);
-$background_setting_bgimage: 'http://wpcsass.localhost/wp-content/uploads/2017/05/bippa.jpg';
-$background_setting_repeat: no-repeat;
-$background_setting_position: center top;
-$background_setting_attachment: scroll;
-$background_setting_size: cover;
 
 ```
 
