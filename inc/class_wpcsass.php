@@ -101,7 +101,7 @@ class WPC_Sass {
 	 */
 	var $section_generators = array(
 		'background_section' => array(
-			'_color' => array(
+			'_bgcolor' => array(
 				'label'     => 'Color',
 				'type'      => 'color',
 				'attribute' => 'background-color'
@@ -111,19 +111,19 @@ class WPC_Sass {
 				'type'    => 'image',
 				'default' => ''
 			),
-			'_repeat' => array(
+			'_bgrepeat' => array(
 				'label'     => 'Repeat',
 				'type'      => 'radio',
 				'default'   => 'no-repeat',
 				'choices'   => array(
 					'no-repeat' => 'No Repeat',
 					'repeat'    => 'Tile',
-					'repeat-x'  => 'Tile Horizontally',
-					'repeat-y'  => 'Tile Vertically'
+					'repeat-x'  => 'Horizontal Tiles',
+					'repeat-y'  => 'Vertical Tiles'
 				),
 				'attribute' => 'background-repeat'
 			),
-			'_position' => array(
+			'_bgposition' => array(
 				'label'     => 'Position',
 				'type'      => 'radio',
 				'default'   => 'center',
@@ -140,7 +140,7 @@ class WPC_Sass {
 		   		),
 				'attribute' => 'background-position'
 			),
-			'_attachment' => array(
+			'_bgattachment' => array(
 				'label'     => 'Attachment',
 				'type'      => 'radio',
 				'default'   => 'scroll',
@@ -150,7 +150,7 @@ class WPC_Sass {
 		   		),
 				'attribute' => 'background-attachment'
 			),
-			'_size' => array(
+			'_bgsize' => array(
 				'label'     => 'Size',
 				'type'      => 'radio',
 				'default'   => 'cover',
@@ -163,7 +163,7 @@ class WPC_Sass {
 			)
 		),
 		'border_section' => array(
-			'_width' => array(
+			'_borderwidth' => array(
 				'label'   => 'Width',
 				'type'    => 'range',
 				'default' => '0',
@@ -174,22 +174,11 @@ class WPC_Sass {
 					'step' => '1'
 				)
 			),
-			'_radius' => array(
-				'label'   => 'Radius',
-				'type'    => 'range',
-				'default' => '0',
-				'units'   => 'px',
-				'range'   => array(
-					'min'  => '0',
-					'max'  => '10',
-					'step' => '1'
-				)
-			),
-			'_color' => array(
+			'_bordercolor' => array(
 				'label'     => 'Color',
 				'type'      => 'color'
 			),
-			'_style' => array(
+			'_borderstyle' => array(
 				'label'   => 'Style',
 				'type'    => 'radio',
 				'default' => 'solid',
@@ -203,6 +192,17 @@ class WPC_Sass {
 					'ridge'  => 'Ridge',
 					'inset'  => 'Inset',
 					'outset' => 'Outset'
+				)
+			),
+			'_borderradius' => array(
+				'label'   => 'Radius',
+				'type'    => 'range',
+				'default' => '0',
+				'units'   => 'px',
+				'range'   => array(
+					'min'  => '0',
+					'max'  => '10',
+					'step' => '1'
 				)
 			)
 		),

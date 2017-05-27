@@ -123,7 +123,11 @@ function wpcsass_customizer_stylesheet() { ?>
 #customize-controls .wpcsass_radio label span {
   display: block;
   font-size: inherit;
+  height: auto;
+  line-height: 1;
+  padding: 8px;
   text-align: center;
+  white-space: normal;
 }
 
 #customize-controls .wpcsass_radio :focus + span {
@@ -148,11 +152,11 @@ function wpcsass_customizer_stylesheet() { ?>
   display: inline-block;
   width: 4px;
   height: 10px;
-  margin-right: 10px;
+  margin: 0 4px 0 -4px;
   transform: rotate(45deg);
 }
 
-#customize-controls .wpcsass_radio[class*='background_position'] label span {
+#customize-controls .wpcsass_radio[class*='_bgposition'] label span {
   align-items: center;
   display: flex;
   height: 40px;
@@ -161,7 +165,7 @@ function wpcsass_customizer_stylesheet() { ?>
   justify-content: center;
 }
 
-#customize-controls .wpcsass_radio[class*='background_position'] :checked + span {
+#customize-controls .wpcsass_radio[class*='_bgposition'] :checked + span {
   text-align: left;
 }
 
@@ -227,6 +231,10 @@ function wpcsass_customizer_stylesheet() { ?>
   -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
   border-color: #ddd;
   box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+}
+
+#customize-controls [id$='_inherit'] {
+  margin-bottom: 0;
 }
 </style>
 <?php
