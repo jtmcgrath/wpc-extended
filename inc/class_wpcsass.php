@@ -2,6 +2,51 @@
 if ( ! class_exists( 'WPC_Sass' ) ) :
 class WPC_Sass {
 	/**
+	 * Sass input directory
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var string
+	 */
+	public $file_sass_input_directory;
+
+	/**
+	 * Sass output directory
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var string
+	 */
+	public $file_sass_output_directory;
+
+	/**
+	 * Sass vardump file
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var string
+	 */
+	public $file_sass_vardump;
+
+	/**
+	 * Sass output file
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var string
+	 */
+	public $file_sass_output;
+
+	/**
+	 * Live css file
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var string
+	 */
+	public $file_live_css;
+
+	/**
 	 * Namespace used for Customizer variables.
 	 *
 	 * @since 1.0.0
@@ -20,18 +65,6 @@ class WPC_Sass {
 	public $sass_entry_point = 'style.scss';
 
 	/**
-	 * Sets Sass entry point.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param string $filename Filename for the Sass entry point.
-	 */
-	public function set_sass_entry_point( $filename ) {
-		$this->sass_entry_point = $filename;
-	}
-
-	/**
 	 * CSS backup quantity.
 	 *
 	 * @since 1.0.0
@@ -39,18 +72,6 @@ class WPC_Sass {
 	 * @var int
 	 */
 	private $css_backup_quantity = 1;
-
-	/**
-	 * Sets CSS backup quantity.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param int $quantity Number of css backup files to create.
-	 */
-	public function set_css_backup_quantity( $quantity ) {
-		$this->css_backup_quantity = $quantity;
-	}
 
 	/**
 	 * Panels to be added to the Customizer.
@@ -265,49 +286,28 @@ class WPC_Sass {
 	);
 
 	/**
-	 * Sass input directory
+	 * Sets Sass entry point.
 	 *
 	 * @since 1.0.0
 	 * @access public
-	 * @var string
+	 *
+	 * @param string $filename Filename for the Sass entry point.
 	 */
-	public $file_sass_input_directory;
+	public function set_sass_entry_point( $filename ) {
+		$this->sass_entry_point = $filename;
+	}
 
 	/**
-	 * Sass output directory
+	 * Sets CSS backup quantity.
 	 *
 	 * @since 1.0.0
 	 * @access public
-	 * @var string
-	 */
-	public $file_sass_output_directory;
-
-	/**
-	 * Sass vardump file
 	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
+	 * @param int $quantity Number of css backup files to create.
 	 */
-	public $file_sass_vardump;
-
-	/**
-	 * Sass output file
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $file_sass_output;
-
-	/**
-	 * Live css file
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $file_live_css;
+	public function set_css_backup_quantity( $quantity ) {
+		$this->css_backup_quantity = $quantity;
+	}
 
 	/**
 	 * Sets Sass input directory
@@ -415,19 +415,6 @@ class WPC_Sass {
 	}
 
 	/**
-	 * Adds default Customizer panel if there are no predefined panels.
-	 *
-	 * @since 1.0.0
-	 * @access private
-	 */
-	private function test_panels() {
-		if ( empty( $this->panels ) ) :
-			$this->add_panel( "WPC_Sass", 50, "WPC_Sass" );
-		endif;
-	}
-
-
-	/**
 	 * Adds or updates a Customizer section.
 	 *
 	 * @since 1.0.0
@@ -488,60 +475,90 @@ class WPC_Sass {
 	 * @param string $data       An associative array containing arguments for the setting
 	 */
 	public function add_setting( $setting_id, $data ) {
+		// If the setting's type matches a setting_generator...
 		if ( array_key_exists( $data['type'], $this->section_generators ) ) :
-			foreach ( $this->section_generators[ $data['type'] ] as $setting_suffix => $setting_data ) :
-				// Create sub-setting id.
-				$_setting_id = $setting_id . $setting_suffix;
-
-				// Create sub-setting data array.
-				$_data = $setting_data;
-
-				// Concatenate labels.
-				$_data['label'] = $data['label'] . ' ' . $setting_data['label'];
-
-				// Set section.
-				$_data['section'] = $data['section'];
-
-				// Get default value for colour sub-setting.
-				if ( $setting_suffix === '_color') :
-					$_data['default'] = $data['default'];
-
-					if ( $data['alpha'] ) :
-						$_data['alpha'] = true;
-					endif;
-				else :
-					$_data['default'] = $setting_data['default'];
-				endif;
-
-				$this->settings[ $_setting_id ] = $_data;
-			endforeach;
+			// ...generate settings from shorthand.
+			$this->generate_settings_from_shorthand( $setting_id, $data );
 		else :
 			if ( array_key_exists( 'inherit', $data ) ) :
-				// Populate the $_data array for the inherit setting.
-				$_data = array(
-					'label'   => $data['label'],
-					'section' => $data['section'],
-					'type'    => 'radio',
-					'choices' => $data['inherit'],
-					'vardump' => 'inherit'
-				);
-
-				// Reset the options array and set the default to the first option.
-				reset( $data['inherit'] );
-				$_data['default'] = key( $data['inherit'] );
-
-				// Add the current setting_id to the choices array as "Custom".
-				$_data['choices'][$setting_id] = 'Custom';
+				// Generate inherit setting.
+				$this->generate_inherit_setting( $setting_id, $data );
 
 				// Remove the label from the parent setting.
 				$data['label'] = '';
-
-				// Create inherit setting.
-				$this->settings[ $setting_id . '_inherit' ] = $_data;
 			endif;
+
 			$data['vardump'] = $data['type'];
 			$this->settings[ $setting_id ] = $data;
 		endif;
+	}
+
+	/**
+	 * Generates dynamic settings from shorthand.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param string $setting_id Id of the setting group
+	 * @param string $data       An associative array containing arguments for the setting group
+	 */
+	private function generate_settings_from_shorthand( $setting_id, $data ) {
+		foreach ( $this->section_generators[ $data['type'] ] as $setting_suffix => $setting_data ) :
+			// Create sub-setting id.
+			$_setting_id = $setting_id . $setting_suffix;
+
+			// Create sub-setting data array.
+			$_data = $setting_data;
+
+			// Concatenate labels.
+			$_data['label'] = $data['label'] . ' ' . $setting_data['label'];
+
+			// Set section.
+			$_data['section'] = $data['section'];
+
+			// Get default value for colour sub-setting.
+			if ( $setting_suffix === '_color') :
+				$_data['default'] = $data['default'];
+
+				if ( $data['alpha'] ) :
+					$_data['alpha'] = true;
+				endif;
+			else :
+				$_data['default'] = $setting_data['default'];
+			endif;
+
+			$this->settings[ $_setting_id ] = $_data;
+		endforeach;
+	}
+
+	/**
+	 * Generates an inherit setting.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param string $setting_id Id of the parent setting
+	 * @param string $data       An associative array containing arguments for the parent setting
+	 */
+	private function generate_inherit_setting( $setting_id, $data ) {
+		// Populate the $_data array for the inherit setting.
+		$_data = array(
+			'label'   => $data['label'],
+			'section' => $data['section'],
+			'type'    => 'radio',
+			'choices' => $data['inherit'],
+			'vardump' => 'inherit'
+		);
+
+		// Reset the options array and set the default to the first option.
+		reset( $data['inherit'] );
+		$_data['default'] = key( $data['inherit'] );
+
+		// Add the current setting_id to the choices array as "Custom".
+		$_data['choices'][$setting_id] = 'Custom';
+
+		// Create inherit setting.
+		$this->settings[ $setting_id . '_inherit' ] = $_data;
 	}
 
 	/**
@@ -568,10 +585,16 @@ class WPC_Sass {
 	 * @param bool   $show_reference Reference a Sass variable instead of a value.
 	 */
 	public function get_setting( $setting_id, $show_reference = false ) {
+		// If setting might inherit from another setting, check the inherit setting first.
 		if ( array_key_exists( $setting_id . '_inherit', $this->settings ) ) :
 			$_data = $this->settings[$setting_id . '_inherit'];
 			$_setting_id = get_theme_mod( $this->namespace . $setting_id . '_inherit', $_data['default'] );
 
+			/**
+			 * In some situations, we want to print the inherited value's original
+			 * source, rather than print the value itself; for example if we want
+			 * one Sass variable to be an alias for another.
+			 */
 			if ( $show_reference && $setting_id !== $_setting_id ) {
 				return '$' . $_setting_id;
 			}
@@ -582,6 +605,19 @@ class WPC_Sass {
 		$data = $this->settings[$setting_id];
 		$value = get_theme_mod( $this->namespace . $setting_id, $data['default'] );
 
+		return $this->format_value( $value, $data );
+	}
+
+	/**
+	 * Formats the setting's value.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param {*}   $value The setting's value
+	 * @param array $data  The setting's data
+	 */
+	private function format_value( $value, $data ) {
 		if ( $data['type'] === 'image' || $data['type'] === 'textarea' || $value === '' ) :
 			$value = "'" . $value . "'";
 		endif;
@@ -610,9 +646,6 @@ class WPC_Sass {
 	 * @param object $wp_customize Instance of the WP_Customize_Control object.
 	 */
 	public function register( $wp_customize ) {
-		// Ensure at least one panel will be added.
-		$this->test_panels();
-
 		// Add panels to Customizer
 		foreach ( $this->panels as $panel_id => $data ) {
 			$wp_customize->add_panel( $this->namespace . $panel_id, $data );
