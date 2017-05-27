@@ -664,139 +664,159 @@ $background_setting_size: cover;
 This example adds a custom section and a custom panel, and demonstrates all of the available controls.
 
 ```php
-
 if ( class_exists( 'WPC_Sass' ) ) :
-  $wpcsass = new WPC_Sass;
+	$wpcsass = new WPC_Sass;
 
-  $wpcsass->add_panel( 'custom_panel', 50, 'Custom Panel' );
-  $wpcsass->add_section( 'custom_section', 50, 'Custom Section', 'custom_panel' );
-  $wpcsass->add_settings( array(
-  	'title_setting' => array(
-  		'label'   => 'Example Title',
-  		'section' => 'custom_section',
-  		'type'    => 'title'
-  	),
-  	'subtitle_setting' => array(
-  		'label'   => 'Example Subtitle',
-  		'section' => 'custom_section',
-  		'type'    => 'subtitle'
-  	),
-  	'description_setting' => array(
-  		'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  		'section'     => 'custom_section',
-  		'type'        => 'description'
-  	),
-  	'range_setting' => array(
-  		'label'   => 'Range',
-  		'section' => 'custom_section',
-  		'type'    => 'range',
-  		'default' => '3',
-  		'units'   => 'px',
-  		'range'   => array(
-  			'min'  => '0',
-  			'max'  => '20',
-  			'step' => '1'
-  		)
-  	),
-  	'radio_setting' => array(
-  		'label'   => 'Radio',
-  		'section' => 'custom_section',
-  		'type'    => 'radio',
-  		'default' => 'a',
-  		'choices' => array(
-  			'a' => 'Option A',
-  			'b' => 'Option B'
-  		)
-  	),
-  	'radio_setting_2' => array(
-  		'label'   => 'Radio 2',
-  		'section' => 'custom_section',
-  		'type'    => 'radio',
-  		'default' => 'a',
-  		'choices' => array(
-  			'a' => 'Option A',
-  			'b' => 'Option B',
-  			'c' => 'Option C'
-  		)
-  	),
-  	'radio_setting_3' => array(
-  		'label'   => 'Radio 3',
-  		'section' => 'custom_section',
-  		'type'    => 'radio',
-  		'default' => 'a',
-  		'choices' => array(
-  			'a' => 'Option A',
-  			'b' => 'Option B',
-  			'c' => 'Option C',
-  			'd' => 'Option D'
-  		)
-  	),
-  	'radio_setting_4' => array(
-  		'label'   => 'Radio 4',
-  		'section' => 'custom_section',
-  		'type'    => 'radio',
-  		'default' => 'a',
-  		'choices' => array(
-  			'a' => 'Option A',
-  			'b' => 'Option B',
-  			'c' => 'Option C',
-  			'd' => 'Option D',
-  			'e' => 'Option E',
-  			'f' => 'Option F'
-  		)
-  	),
-  	'background_setting' => array(
-  		'label'   => 'Background',
-  		'section' => 'custom_section',
-  		'type'    => 'background_section',
-  		'alpha'   => true,
-  		'default' => '#444'
-  	),
-  	'alpha_setting' => array(
-  		'label'   => 'Alpha Colour',
-  		'section' => 'custom_section',
-  		'type'    => 'colour',
-  		'alpha'   => true,
-  		'default' => '#444'
-  	),
-  	'colour_setting' => array(
-  		'label'   => 'Standard Colour',
-  		'section' => 'custom_section',
-  		'type'    => 'colour',
-  		'default' => '#444'
-  	),
-  	'text_setting' => array(
-  		'label'   => 'Text',
-  		'section' => 'custom_section',
-  		'type'    => 'text',
-  		'default' => 'default'
-  	),
-  	'checkbox_setting' => array(
-  		'label'   => 'Checkbox',
-  		'section' => 'custom_section',
-  		'type'    => 'checkbox'
-  	),
-  	'select_setting' => array(
-  		'label'   => 'Select',
-  		'section' => 'custom_section',
-  		'type'    => 'select',
-  		'default' => 'a',
-  		'choices' => array(
-  			'a' => 'Option A',
-  			'b' => 'Option B',
-  			'c' => 'Option C'
-  		)
-  	),
-  	'textarea_setting' => array(
-  		'label'   => 'Textarea',
-  		'section' => 'custom_section',
-  		'type'    => 'textarea'
-  	),
-  	'image_setting' => array(
-  		'label'   => 'Image',
-  		'section' => 'custom_section',
-  		'type'    => 'image'
-  	)
-  ) );
+	$wpcsass->add_panel( 'custom_panel', 50, 'Custom Panel' );
+	$wpcsass->add_section( 'custom_section', 50, 'Custom Section', 'custom_panel' );
+	$wpcsass->add_settings( array(
+		'title_setting' => array(
+			'label'   => 'Example Title',
+			'section' => 'custom_section',
+			'type'    => 'title'
+		),
+		'subtitle_setting' => array(
+			'label'   => 'Example Subtitle',
+			'section' => 'custom_section',
+			'type'    => 'subtitle'
+		),
+		'description_setting' => array(
+			'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+			'section'     => 'custom_section',
+			'type'        => 'description'
+		),
+		'range_setting' => array(
+			'label'   => 'Range',
+			'section' => 'custom_section',
+			'type'    => 'range',
+			'default' => '3',
+			'units'   => 'px',
+			'range'   => array(
+				'min'  => '0',
+				'max'  => '20',
+				'step' => '1'
+			)
+		),
+		'radio_setting' => array(
+			'label'   => 'Radio',
+			'section' => 'custom_section',
+			'type'    => 'radio',
+			'default' => 'a',
+			'choices' => array(
+				'a' => 'Option A',
+				'b' => 'Option B'
+			)
+		),
+		'radio_setting_2' => array(
+			'label'   => 'Radio 2',
+			'section' => 'custom_section',
+			'type'    => 'radio',
+			'default' => 'a',
+			'choices' => array(
+				'a' => 'Option A',
+				'b' => 'Option B',
+				'c' => 'Option C'
+			)
+		),
+		'radio_setting_3' => array(
+			'label'   => 'Radio 3',
+			'section' => 'custom_section',
+			'type'    => 'radio',
+			'default' => 'a',
+			'choices' => array(
+				'a' => 'Option A',
+				'b' => 'Option B',
+				'c' => 'Option C',
+				'd' => 'Option D'
+			)
+		),
+		'radio_setting_4' => array(
+			'label'   => 'Radio 4',
+			'section' => 'custom_section',
+			'type'    => 'radio',
+			'default' => 'a',
+			'choices' => array(
+				'a' => 'Option A',
+				'b' => 'Option B',
+				'c' => 'Option C',
+				'd' => 'Option D',
+				'e' => 'Option E',
+				'f' => 'Option F'
+			)
+		),
+		'background_setting' => array(
+			'label'   => 'Background',
+			'section' => 'custom_section',
+			'type'    => 'background_section',
+			'alpha'   => true,
+			'default' => '#444'
+		),
+		'border_setting' => array(
+			'label'   => 'Border',
+			'section' => 'custom_section',
+			'type'    => 'border_section',
+			'default' => '#444'
+		),
+		'typography_setting' => array(
+			'label'   => 'Typography',
+			'section' => 'custom_section',
+			'type'    => 'typography_section'
+		),
+		'primary_colour' => array(
+			'label'   => 'Primary Colour',
+			'section' => 'custom_section',
+			'type'    => 'colour',
+			'alpha'   => true,
+			'default' => '#444'
+		),
+		'secondary_colour' => array(
+			'label'   => 'Secondary Colour',
+			'section' => 'custom_section',
+			'type'    => 'colour',
+			'default' => '#444'
+		),
+		'another_setting' => array(
+			'label'   => 'Another Colour',
+			'section' => 'custom_section',
+			'type'    => 'colour',
+			'default' => '#444',
+			'inherit' => array(
+				'primary_colour'   =>  'Alpha',
+				'secondary_colour' => 'Standard'
+			)
+		),
+		'text_setting' => array(
+			'label'   => 'Text',
+			'section' => 'custom_section',
+			'type'    => 'text',
+			'default' => 'default'
+		),
+		'checkbox_setting' => array(
+			'label'   => 'Checkbox',
+			'section' => 'custom_section',
+			'type'    => 'checkbox'
+		),
+		'select_setting' => array(
+			'label'   => 'Select',
+			'section' => 'custom_section',
+			'type'    => 'select',
+			'default' => 'a',
+			'choices' => array(
+				'a' => 'Option A',
+				'b' => 'Option B',
+				'c' => 'Option C'
+			)
+		),
+		'textarea_setting' => array(
+			'label'   => 'Textarea',
+			'section' => 'custom_section',
+			'type'    => 'textarea'
+		),
+		'image_setting' => array(
+			'label'   => 'Image',
+			'section' => 'custom_section',
+			'type'    => 'image'
+		)
+	) );
 endif;
 ```
