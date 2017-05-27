@@ -1,25 +1,56 @@
 ( function( $ ) {
-	function toggle_control_siblings( control_type, id_suffix, display_logic, siblings ) {
-		$( control_type ).filter( '[id$="' + id_suffix + '"]' ).each( function() {
+	function add_control( controls, control_type, id_suffix, display_logic, siblings ) {
+		$( control_type ).filter( '[id$="' + id_suffix + '"]').each( function() {
 			// Grab the id of the control element.
 			var id = $( this ).attr( 'id' );
-
-			// Check whether the control siblings should be hidden.
-			var show_controls = display_logic( this );
 
 			// Add # to start of id, and remove the suffix from the string.
 			id = '#' + id.replace( id_suffix, '' );
 
-			// Iterate through siblings array, and show/hide them depending on show_controls variable.
-			siblings.forEach( function( target ) {
-				target = id + target;
-				if ( show_controls ) {
-					$( target ).slideDown().fadeIn();
-				} else {
-					$( target ).slideUp().fadeOut();
-				}
+			// Map the siblings array from string to jQuery element.
+			siblings = siblings.map( function( target ) {
+				return $( id + target );
+			} );
+
+			// Add the elements to the controls array.
+			controls.push( {
+				'element': this,
+				'status': null,
+				'display_logic': display_logic,
+				'siblings': siblings
 			} );
 		} );
+
+		return controls;
+	}
+
+	function toggle_controls( controls ) {
+		controls.forEach( function(control) {
+			// Get the current status of the control.
+			var show_controls = control.display_logic( control.element );
+
+			// If the control status has changed...
+			if ( control.status !== show_controls ) {
+
+			// ...and then update the status.
+			control.status = show_controls;
+				// ...toggle all the siblings...
+				control.siblings.forEach( function( target ) {
+					toggle_control( target, show_controls );
+				} );
+
+				// ...and then update the status.
+				control.status = show_controls;
+			}
+		} );
+	}
+
+	function toggle_control( control, show_control ) {
+		if ( show_control ) {
+			control.slideDown().fadeIn();
+		} else {
+			control.slideUp().fadeOut();
+		}
 	}
 
 	function elem_has_placeholder( elem ) {
@@ -37,35 +68,49 @@
 		return $( elem ).find( 'label:last-child' ).find( 'input' ).is( ':checked' ) ? true : false;
 	}
 
-	function wpcsass_toggle_custom_controls() {
-		toggle_control_siblings(
+	$( document ).ready( function () {
+		// Create controls variable.
+		var controls = [];
+
+		// Add controls.
+		controls = add_control(
+			controls,
 			'.customize-control-image',
 			'_bgimage',
 			elem_has_placeholder,
 			[ '_bgrepeat', '_bgposition', '_bgattachment', '_bgsize' ]
 		);
 
-		toggle_control_siblings(
+		controls = add_control(
+			controls,
 			'.customize-control-text',
 			'_borderwidth',
 			elem_has_value,
 			[ '_bordercolor', '_borderstyle' ]
 		);
 
-		toggle_control_siblings(
+		controls = add_control(
+			controls,
 			'.customize-control',
 			'_inherit',
 			elem_is_checked,
 			[ '' ]
 		);
-	}
 
-	// Shorthand to bind the wpcsass_toggle_custom_controls function to the events listed in the array.
-	[ 'change', 'ready' ].forEach( function( e ) {
-		wp.customize.bind( e, function() { setTimeout(function() { wpcsass_toggle_custom_controls(); }, 100 ); } );
-	} );
+		// Call the toggle_controls() function to calculate the initial state.
+		toggle_controls( controls );
 
-	$( document ).ready( function () {
+		var toggle_controls_timeout;
+
+		// Shorthand to bind the toggle_controls() function to the events listed in the array.
+		[ 'change', 'ready' ].forEach( function( e ) {
+			wp.customize.bind( e, function() {
+				// Use a timeout to ensure the controls aren't toggled while the user is interacting with the controls.
+				clearTimeout( toggle_controls_timeout );
+				toggle_controls_timeout = setTimeout(function() { toggle_controls( controls ); }, 200 );
+			} );
+		} );
+
 		// The custom range control includes dual inputs, so we want to tie their values together.
 		$( '#customize-theme-controls' ).find( '.wpcsass_range' ).each( function() {
 			// When either input is changed...
