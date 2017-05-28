@@ -5,11 +5,11 @@
 			var id = $( this ).attr( 'id' );
 
 			// Add # to start of id, and remove the suffix from the string.
-			id = '#' + id.replace( id_suffix, '' );
+			id = '#' + id.replace( /id_suffix$/, '' );
 
 			// Map the siblings array from string to jQuery element.
-			siblings = siblings.map( function( target ) {
-				return $( id + target );
+			var _siblings = siblings.slice().map( function( target ) {
+				return $( id + target )[0];
 			} );
 
 			// Add the elements to the controls array.
@@ -17,15 +17,15 @@
 				'element': this,
 				'status': null,
 				'display_logic': display_logic,
-				'siblings': siblings
+				'siblings': _siblings
 			} );
 		} );
 
 		return controls;
 	}
 
-	function toggle_controls( controls ) {
-		controls.forEach( function(control) {
+	function toggle_controls( controls ) {console.log(controls);
+		controls.forEach( function( control ) {
 			// Get the current status of the control.
 			var show_controls = control.display_logic( control.element );
 
