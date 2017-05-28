@@ -5,11 +5,12 @@
 			var id = $( this ).attr( 'id' );
 
 			// Add # to start of id, and remove the suffix from the string.
-			id = '#' + id.replace( /id_suffix$/, '' );
+			var regex = new RegExp( id_suffix + '\$' );
+			id = '#' + id.replace( regex, '' );
 
 			// Map the siblings array from string to jQuery element.
 			var _siblings = siblings.slice().map( function( target ) {
-				return $( id + target )[0];
+				return $( id + target );
 			} );
 
 			// Add the elements to the controls array.
