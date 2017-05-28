@@ -634,37 +634,59 @@ The [Comprehensive Example Usage](#comprehensive-example-usage) below will outpu
 
 ```
 
-// Example Title
-// Example Subtitle
-$range_setting: 3px;
-$radio_setting: a;
-$radio_setting_2: a;
-$radio_setting_3: a;
-$radio_setting_4: a;
-$background_setting_bgcolor: #444444;
-$background_setting_bgimage: '';
-$background_setting_bgrepeat: repeat-y;
-$background_setting_bgposition: left top;
-$background_setting_bgattachment: fixed;
-$background_setting_bgsize: contain;
-$border_setting_borderwidth: 0px;
-$border_setting_bordercolor: '';
-$border_setting_borderstyle: solid;
-$border_setting_borderradius: 0px;
-$typography_setting_font_family: inherit;
-$typography_setting_font_size: 16px;
-$typography_setting_font_style: inherit;
-$typography_setting_font_weight: 400;
-$typography_setting_line_height: 1.2;
-$primary_colour: #444444;
-$secondary_colour: #444444;
-$another_setting_inherit: $primary_colour;
-$another_setting: $primary_colour;
-$text_setting: default;
-$checkbox_setting: false;
-$select_setting: a;
-$textarea_setting: '';
-$image_setting: '';
+// Title
+// Subtitle
+
+// Range Control
+$range: 15px;
+
+// Radio Control
+$radio_1: a;
+$radio_2: a;
+$radio_3: a;
+$radio_4: a;
+
+// Alpha Colour Control
+$alpha_colour: #444444;
+
+// Standard Controls
+$colour: #444;
+$text: default;
+$checkbox: true;
+$select: a;
+$textarea: '';
+$image: '';
+
+// Background Section
+$background_section_bgcolor: '';
+$background_section_bgimage: '';
+$background_section_bgrepeat: no-repeat;
+$background_section_bgposition: center;
+$background_section_bgattachment: scroll;
+$background_section_bgsize: cover;
+
+// Border Section
+$border_section_borderwidth: 0px;
+$border_section_bordercolor: '';
+$border_section_borderstyle: solid;
+$border_section_borderradius: 0px;
+
+// Typography Section
+$typography_section_font_family: inherit;
+$typography_section_font_size: 16px;
+$typography_section_font_style: inherit;
+$typography_section_font_weight: 400;
+$typography_section_line_height: 1.5;
+
+// Inherit Examples
+$inherit_colour_inherit: $alpha_colour;
+$inherit_colour: $alpha_colour;
+$another_inherit_colour_inherit: $alpha_colour;
+$another_inherit_colour: $alpha_colour;
+$inherit_range_inherit: $range;
+$inherit_range: $range;
+$inherit_radio_inherit: $inherit_radio;
+$inherit_radio: a;
 
 ```
 
@@ -676,27 +698,39 @@ This example adds a custom section and a custom panel, and demonstrates all of t
 if ( class_exists( 'WPC_Sass' ) ) :
 	$wpcsass = new WPC_Sass;
 
-	$wpcsass->add_panel( 'custom_panel', 50, 'Custom Panel' );
-	$wpcsass->add_section( 'custom_section', 50, 'Custom Section', 'custom_panel' );
+	$wpcsass->add_panel( 'examples', 1, 'WPCSass Examples' );
+	$wpcsass->add_section( 'presentation', 1, 'Presentation Controls', 'examples' );
+	$wpcsass->add_section( 'custom', 2, 'Custom Controls', 'examples' );
+	$wpcsass->add_section( 'standard', 3, 'Standard Controls', 'examples' );
+	$wpcsass->add_section( 'shorthands', 4, 'Shorthands', 'examples' );
+	$wpcsass->add_section( 'inherit', 5, 'Inherit', 'examples' );
 	$wpcsass->add_settings( array(
-		'title_setting' => array(
-			'label'   => 'Example Title',
-			'section' => 'custom_section',
+		// Presentation Section
+		'title' => array(
+			'label'   => 'Title',
+			'section' => 'presentation',
 			'type'    => 'title'
 		),
-		'subtitle_setting' => array(
-			'label'   => 'Example Subtitle',
-			'section' => 'custom_section',
+		'subtitle' => array(
+			'label'   => 'Subtitle',
+			'section' => 'presentation',
 			'type'    => 'subtitle'
 		),
-		'description_setting' => array(
-			'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-			'section'     => 'custom_section',
+		'description' => array(
+			'description' => 'This is what title, subtitle, and description controls added via WPCSass look like!',
+			'section'     => 'presentation',
 			'type'        => 'description'
 		),
-		'range_setting' => array(
+
+		// Custom Controls Section
+		'range_title' => array(
+			'label'   => 'Range Control',
+			'section' => 'custom',
+			'type'    => 'title'
+		),
+		'range' => array(
 			'label'   => 'Range',
-			'section' => 'custom_section',
+			'section' => 'custom',
 			'type'    => 'range',
 			'default' => '3',
 			'units'   => 'px',
@@ -706,9 +740,14 @@ if ( class_exists( 'WPC_Sass' ) ) :
 				'step' => '1'
 			)
 		),
-		'radio_setting' => array(
-			'label'   => 'Radio',
-			'section' => 'custom_section',
+		'radio_title' => array(
+			'label'   => 'Radio Control',
+			'section' => 'custom',
+			'type'    => 'title'
+		),
+		'radio_1' => array(
+			'label'   => 'Radio 1',
+			'section' => 'custom',
 			'type'    => 'radio',
 			'default' => 'a',
 			'choices' => array(
@@ -716,9 +755,9 @@ if ( class_exists( 'WPC_Sass' ) ) :
 				'b' => 'Option B'
 			)
 		),
-		'radio_setting_2' => array(
+		'radio_2' => array(
 			'label'   => 'Radio 2',
-			'section' => 'custom_section',
+			'section' => 'custom',
 			'type'    => 'radio',
 			'default' => 'a',
 			'choices' => array(
@@ -727,9 +766,9 @@ if ( class_exists( 'WPC_Sass' ) ) :
 				'c' => 'Option C'
 			)
 		),
-		'radio_setting_3' => array(
+		'radio_3' => array(
 			'label'   => 'Radio 3',
-			'section' => 'custom_section',
+			'section' => 'custom',
 			'type'    => 'radio',
 			'default' => 'a',
 			'choices' => array(
@@ -739,9 +778,9 @@ if ( class_exists( 'WPC_Sass' ) ) :
 				'd' => 'Option D'
 			)
 		),
-		'radio_setting_4' => array(
+		'radio_4' => array(
 			'label'   => 'Radio 4',
-			'section' => 'custom_section',
+			'section' => 'custom',
 			'type'    => 'radio',
 			'default' => 'a',
 			'choices' => array(
@@ -753,61 +792,45 @@ if ( class_exists( 'WPC_Sass' ) ) :
 				'f' => 'Option F'
 			)
 		),
-		'background_setting' => array(
-			'label'   => 'Background',
-			'section' => 'custom_section',
-			'type'    => 'background_section',
-			'alpha'   => true,
-			'default' => '#444'
+		'alpha_title' => array(
+			'label'   => 'Alpha Colour Control',
+			'section' => 'custom',
+			'type'    => 'title'
 		),
-		'border_setting' => array(
-			'label'   => 'Border',
-			'section' => 'custom_section',
-			'type'    => 'border_section',
-			'default' => '#444'
-		),
-		'typography_setting' => array(
-			'label'   => 'Typography',
-			'section' => 'custom_section',
-			'type'    => 'typography_section'
-		),
-		'primary_colour' => array(
-			'label'   => 'Primary Colour',
-			'section' => 'custom_section',
+		'alpha_colour' => array(
+			'label'   => 'Alpha Colour',
+			'section' => 'custom',
 			'type'    => 'colour',
 			'alpha'   => true,
 			'default' => '#444'
 		),
-		'secondary_colour' => array(
-			'label'   => 'Secondary Colour',
-			'section' => 'custom_section',
+
+		// Standard Controls Section
+		'standard_controls_title' => array(
+			'label'   => 'Standard Controls',
+			'section' => 'standard',
+			'type'    => 'title'
+		),
+		'colour' => array(
+			'label'   => 'Colour',
+			'section' => 'standard',
 			'type'    => 'colour',
 			'default' => '#444'
 		),
-		'another_setting' => array(
-			'label'   => 'Another Colour',
-			'section' => 'custom_section',
-			'type'    => 'colour',
-			'default' => '#444',
-			'inherit' => array(
-				'primary_colour'   =>  'Alpha',
-				'secondary_colour' => 'Standard'
-			)
-		),
-		'text_setting' => array(
+		'text' => array(
 			'label'   => 'Text',
-			'section' => 'custom_section',
+			'section' => 'standard',
 			'type'    => 'text',
 			'default' => 'default'
 		),
-		'checkbox_setting' => array(
+		'checkbox' => array(
 			'label'   => 'Checkbox',
-			'section' => 'custom_section',
+			'section' => 'standard',
 			'type'    => 'checkbox'
 		),
-		'select_setting' => array(
+		'select' => array(
 			'label'   => 'Select',
-			'section' => 'custom_section',
+			'section' => 'standard',
 			'type'    => 'select',
 			'default' => 'a',
 			'choices' => array(
@@ -816,15 +839,109 @@ if ( class_exists( 'WPC_Sass' ) ) :
 				'c' => 'Option C'
 			)
 		),
-		'textarea_setting' => array(
+		'textarea' => array(
 			'label'   => 'Textarea',
-			'section' => 'custom_section',
+			'section' => 'standard',
 			'type'    => 'textarea'
 		),
-		'image_setting' => array(
+		'image' => array(
 			'label'   => 'Image',
-			'section' => 'custom_section',
+			'section' => 'standard',
 			'type'    => 'image'
+		),
+
+		// Shorthands Section
+		'background_section_title' => array(
+			'label'   => 'Background Section',
+			'section' => 'shorthands',
+			'type'    => 'title'
+		),
+		'background_section' => array(
+			'label'   => 'Background',
+			'section' => 'shorthands',
+			'type'    => 'background_section',
+			'alpha'   => true,
+			'default' => '#444'
+		),
+		'border_section_title' => array(
+			'label'   => 'Border Section',
+			'section' => 'shorthands',
+			'type'    => 'title'
+		),
+		'border_section' => array(
+			'label'   => 'Border',
+			'section' => 'shorthands',
+			'type'    => 'border_section',
+			'default' => '#444'
+		),
+		'typography_section_title' => array(
+			'label'   => 'Typography Section',
+			'section' => 'shorthands',
+			'type'    => 'title'
+		),
+		'typography_section' => array(
+			'label'   => 'Typography',
+			'section' => 'shorthands',
+			'type'    => 'typography_section'
+		),
+
+		// Inherit Section
+		'inherit_title' => array(
+			'label'   => 'Inherit Examples',
+			'section' => 'inherit',
+			'type'    => 'title'
+		),
+		'inherit_colour' => array(
+			'label'   => 'Inherit Colour',
+			'section' => 'inherit',
+			'type'    => 'colour',
+			'default' => '#444',
+			'inherit' => array(
+				'alpha_colour' => 'Alpha',
+				'colour'       => 'Standard'
+			)
+		),
+		'another_inherit_colour' => array(
+			'label'   => 'Another Inherit Colour',
+			'section' => 'inherit',
+			'type'    => 'colour',
+			'default' => '#444',
+			'inherit' => array(
+				'alpha_colour'   => 'Alpha',
+				'colour'         => 'Standard',
+				'inherit_colour' => 'Inherit'
+			)
+		),
+		'inherit_range' => array(
+			'label'   => 'Inherit Range',
+			'section' => 'inherit',
+			'type'    => 'range',
+			'default' => '3',
+			'units'   => 'px',
+			'range'   => array(
+				'min'  => '0',
+				'max'  => '20',
+				'step' => '1'
+			),
+			'inherit' => array(
+				'range' => 'Range'
+			)
+		),
+		'inherit_radio' => array(
+			'label'   => 'Inherit Radio',
+			'section' => 'inherit',
+			'type'    => 'radio',
+			'default' => 'a',
+			'choices' => array(
+				'a' => 'Option A',
+				'b' => 'Option B'
+			),
+			'inherit' => array(
+				'radio_1' => 'Radio 1',
+				'radio_2' => 'Radio 2',
+				'radio_3' => 'Radio 3',
+				'radio_4' => 'Radio 4'
+			)
 		)
 	) );
 endif;
