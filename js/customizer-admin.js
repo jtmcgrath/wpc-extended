@@ -25,7 +25,7 @@
 		return controls;
 	}
 
-	function toggle_controls( controls ) {console.log(controls);
+	function toggle_controls( controls ) {
 		controls.forEach( function( control ) {
 			// Get the current status of the control.
 			var show_controls = control.display_logic( control.element );
