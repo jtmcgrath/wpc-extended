@@ -24,6 +24,7 @@ This experimental plugin allows user settings in the WordPress Customizer to aut
    - [Add Sections](#add-sections)
    - [Add Setting](#add-setting)
    - [Add Settings](#add-settings)
+   - [Add Shorthand](#add-shorthand)
    - [Options Usage](#options-usage)
 5. [Using Settings In Theme Files](#use-settings-in-theme-files)
 6. [Available Controls](#available-controls)
@@ -320,6 +321,66 @@ $wpcsass->add_settings( array(
 ) );
 ```
 
+### Add Shorthand
+
+Adds or updates a section shorthand.
+
+*Method*
+```php
+$wpcsass->add_shorthand( $shorthand_id, $data );
+```
+
+*Example*
+```php
+$wpcsass->add_shorthand(
+	'border_section',
+	array(
+		'_borderwidth' => array(
+			'label'   => 'Width',
+			'type'    => 'range',
+			'default' => '0',
+			'units'   => 'px',
+			'range'   => array(
+				'min'  => '0',
+				'max'  => '10',
+				'step' => '1'
+			)
+		),
+		'_bordercolor' => array(
+			'label'     => 'Color',
+			'type'      => 'color'
+		),
+		'_borderstyle' => array(
+			'label'   => 'Style',
+			'type'    => 'radio',
+			'default' => 'solid',
+			'choices' => array(
+				'none'   => 'None',
+				'dotted' => 'Dotted',
+				'dashed' => 'Dashed',
+				'solid'  => 'Solid',
+				'double' => 'Double',
+				'groove' => 'Groove',
+				'ridge'  => 'Ridge',
+				'inset'  => 'Inset',
+				'outset' => 'Outset'
+			)
+		),
+		'_borderradius' => array(
+			'label'   => 'Radius',
+			'type'    => 'range',
+			'default' => '0',
+			'units'   => 'px',
+			'range'   => array(
+				'min'  => '0',
+				'max'  => '10',
+				'step' => '1'
+			)
+		)
+	)
+);
+```
+
 ### Options Usage
 
 Combining all the above, a simple example would be:
@@ -373,7 +434,7 @@ As an example, many themes would include two main colours which would be used co
 
 With the `inherit` setting, you can do this easily. You simply add an `array` to your setting's options containing a list of the settings you want it to be able to reference, and the plugin handles everything for you. It displays the available inherit options as a set of radio buttons, plus a "Custom" option which reveals a separate control when selected which allows the user to specify a non-inherited value.
 
-The `inherit` setting can be added to any of the controls listed below except the `Section Shorthands`.
+The `inherit` setting can be added to any of the controls listed below except the `Section Shorthands`. The array can contain any number of settings.
 
 ![Inherit](http://i.imgur.com/uWaSbvi.png)
 

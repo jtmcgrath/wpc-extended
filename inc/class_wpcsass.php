@@ -114,13 +114,13 @@ class WPC_Sass {
 	);
 
 	/**
-	 * Array containing details for section generators
+	 * Array containing details for section shorthands
 	 *
 	 * @since 1.0.0
 	 * @access private
 	 * @var array
 	 */
-	var $section_generators = array(
+	var $section_shorthands = array(
 		'background_section' => array(
 			'_bgcolor' => array(
 				'label'     => 'Color',
@@ -370,6 +370,19 @@ class WPC_Sass {
 	}
 
 	/**
+	 * Adds or updates a section shorthand.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param string $shorthand_id Id of the shorthand to add or update
+	 * @param array  $data         An associative array containing the content of the shorthand
+	 */
+	public function add_shorthand( $shorthand_id, $data ) {
+		$this->panels[ $shorthand_id ] = $data;
+	}
+
+	/**
 	 * Adds or updates a Customizer panel.
 	 *
 	 * @since 1.0.0
@@ -478,8 +491,8 @@ class WPC_Sass {
 	 * @param string $data       An associative array containing arguments for the setting
 	 */
 	public function add_setting( $setting_id, $data ) {
-		// If the setting's type matches a setting_generator...
-		if ( array_key_exists( $data['type'], $this->section_generators ) ) :
+		// If the setting's type matches a setting_shorthand...
+		if ( array_key_exists( $data['type'], $this->section_shorthands ) ) :
 			// ...generate settings from shorthand.
 			$this->generate_settings_from_shorthand( $setting_id, $data );
 		else :
@@ -506,7 +519,7 @@ class WPC_Sass {
 	 * @param string $data       An associative array containing arguments for the setting group
 	 */
 	private function generate_settings_from_shorthand( $setting_id, $data ) {
-		foreach ( $this->section_generators[ $data['type'] ] as $setting_suffix => $setting_data ) :
+		foreach ( $this->section_shorthands[ $data['type'] ] as $setting_suffix => $setting_data ) :
 			// Create sub-setting id.
 			$_setting_id = $setting_id . $setting_suffix;
 
@@ -862,7 +875,7 @@ class WPC_Sass {
 			elseif ( $data['vardump'] === 'subtitle' ) :
 				// Add label to string as comment.
 				$var_dump .= "// " . $data['label'] . "\n";
-			elseif ( array_key_exists( $data['type'], $this->section_generators ) ) :
+			elseif ( array_key_exists( $data['type'], $this->section_shorthands ) ) :
 				continue;
 			elseif ( ! in_array( $data['type'], $this->comment_types ) ) :
 				// Get setting value
