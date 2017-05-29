@@ -110,7 +110,7 @@ class WPC_Sass {
 	var $comment_types = array(
 		'title',
 		'subtitle',
-		'description'
+		'description',
 	);
 
 	/**
@@ -125,12 +125,12 @@ class WPC_Sass {
 			'_bgcolor' => array(
 				'label'     => 'Color',
 				'type'      => 'color',
-				'attribute' => 'background-color'
+				'attribute' => 'background-color',
 			),
 			'_bgimage' => array(
 				'label'   => 'Image',
 				'type'    => 'image',
-				'default' => ''
+				'default' => '',
 			),
 			'_bgrepeat' => array(
 				'label'     => 'Repeat',
@@ -140,9 +140,9 @@ class WPC_Sass {
 					'no-repeat' => 'No Repeat',
 					'repeat'    => 'Tile',
 					'repeat-x'  => 'Horizontal Tiles',
-					'repeat-y'  => 'Vertical Tiles'
+					'repeat-y'  => 'Vertical Tiles',
 				),
-				'attribute' => 'background-repeat'
+				'attribute' => 'background-repeat',
 			),
 			'_bgposition' => array(
 				'label'     => 'Position',
@@ -157,9 +157,9 @@ class WPC_Sass {
 					'right center'  => 'Right',
 					'left bottom'   => 'Bottom Left',
 					'center bottom' => 'Bottom',
-					'right bottom'  => 'Bottom Right'
+					'right bottom'  => 'Bottom Right',
 				),
-				'attribute' => 'background-position'
+				'attribute' => 'background-position',
 			),
 			'_bgattachment' => array(
 				'label'     => 'Attachment',
@@ -167,9 +167,9 @@ class WPC_Sass {
 				'default'   => 'scroll',
 				'choices'   => array(
 					'scroll' => 'Scroll',
-					'fixed'  => 'Fixed'
+					'fixed'  => 'Fixed',
 				),
-				'attribute' => 'background-attachment'
+				'attribute' => 'background-attachment',
 			),
 			'_bgsize' => array(
 				'label'     => 'Size',
@@ -178,9 +178,9 @@ class WPC_Sass {
 				'choices'   => array(
 					'auto'    => 'Auto',
 					'cover'   => 'Cover',
-					'contain' => 'Contain'
+					'contain' => 'Contain',
 				),
-				'attribute' => 'background-size'
+				'attribute' => 'background-size',
 			)
 		),
 		'border_section' => array(
@@ -192,12 +192,12 @@ class WPC_Sass {
 				'range'   => array(
 					'min'  => '0',
 					'max'  => '10',
-					'step' => '1'
-				)
+					'step' => '1',
+				),
 			),
 			'_bordercolor' => array(
 				'label'     => 'Color',
-				'type'      => 'color'
+				'type'      => 'color',
 			),
 			'_borderstyle' => array(
 				'label'   => 'Style',
@@ -212,8 +212,8 @@ class WPC_Sass {
 					'groove' => 'Groove',
 					'ridge'  => 'Ridge',
 					'inset'  => 'Inset',
-					'outset' => 'Outset'
-				)
+					'outset' => 'Outset',
+				),
 			),
 			'_borderradius' => array(
 				'label'   => 'Radius',
@@ -223,15 +223,15 @@ class WPC_Sass {
 				'range'   => array(
 					'min'  => '0',
 					'max'  => '10',
-					'step' => '1'
-				)
-			)
+					'step' => '1',
+				),
+			),
 		),
 		'typography_section' => array(
 			'_font_family' => array(
 				'label'   => 'Font Family',
 				'type'    => 'text',
-				'default' => 'inherit'
+				'default' => 'inherit',
 			),
 			'_font_size' => array(
 				'label'   => 'Font Size',
@@ -241,8 +241,8 @@ class WPC_Sass {
 				'range'   => array(
 					'min'  => '8',
 					'max'  => '60',
-					'step' => '1'
-				)
+					'step' => '1',
+				),
 			),
 			'_font_style' => array(
 				'label'   => 'Font Style',
@@ -252,8 +252,8 @@ class WPC_Sass {
 					'inherit' => 'Inherit',
 					'normal'  => 'Normal',
 					'italic'  => 'Italic',
-					'oblique' => 'Oblique'
-				)
+					'oblique' => 'Oblique',
+				),
 			),
 			'_font_weight' => array(
 				'label'   => 'Font Weight',
@@ -268,8 +268,8 @@ class WPC_Sass {
 					600 => 'Semi Bold',
 					700 => 'Bold',
 					800 => 'Extra Bold',
-					900 => 'Black'
-				)
+					900 => 'Black',
+				),
 			),
 			'_line_height' => array(
 				'label'   => 'Line Height',
@@ -279,9 +279,9 @@ class WPC_Sass {
 				'range'   => array(
 					'min'  => '0.5',
 					'max'  => '5',
-					'step' => '0.1'
-				)
-			)
+					'step' => '0.1',
+				),
+			),
 		)
 	);
 
@@ -399,7 +399,7 @@ class WPC_Sass {
 
 		$this->panels[ $panel_id ] = array(
 			'priority' => $priority,
-			'title'    => $title
+			'title'    => $title,
 		);
 	}
 
@@ -445,7 +445,7 @@ class WPC_Sass {
 
 		$this->sections[ $section_id ] = array(
 			'priority' => $priority,
-			'title'    => $title
+			'title'    => $title,
 		);
 
 		if ( $panel_id ) :
@@ -533,7 +533,7 @@ class WPC_Sass {
 			$_data['section'] = $data['section'];
 
 			// Get default value for colour sub-setting.
-			if ( $setting_suffix === '_color') :
+			if ( '_color' === $setting_suffix ) :
 				$_data['default'] = $data['default'];
 
 				if ( $data['alpha'] ) :
@@ -563,7 +563,7 @@ class WPC_Sass {
 			'section' => $data['section'],
 			'type'    => 'radio',
 			'choices' => $data['inherit'],
-			'vardump' => 'inherit'
+			'vardump' => 'inherit',
 		);
 
 		// Reset the options array and set the default to the first option.
@@ -611,7 +611,7 @@ class WPC_Sass {
 			 * source, rather than print the value itself; for example if we want
 			 * one Sass variable to be an alias for another.
 			 */
-			if ( $show_reference && $setting_id !== $_setting_id ) {
+			if ( 'show_reference' === $show_reference && $setting_id !== $_setting_id ) {
 				return '$' . $_setting_id;
 			}
 
@@ -634,11 +634,11 @@ class WPC_Sass {
 	 * @param array $data  The setting's data
 	 */
 	private function format_value( $value, $data ) {
-		if ( $data['type'] === 'image' || $data['type'] === 'textarea' || $value === '' ) :
+		if ( 'image' === $data['type']  || 'textarea' === $data['type'] || '' === $value ) :
 			$value = "'" . $value . "'";
 		endif;
 
-		if ( $data['type'] === 'checkbox' ) :
+		if (  'checkbox' ===$data['type'] ) :
 			if ( $value ) :
 				$value = 'true';
 			else :
@@ -699,7 +699,7 @@ class WPC_Sass {
 		$setting_id = $this->namespace . $setting_id;
 
 		$wp_customize->add_setting( $setting_id, array(
-			'default' => $data['default']
+			'default' => $data['default'],
 		) );
 
 		switch( $data['type'] ) :
@@ -712,7 +712,7 @@ class WPC_Sass {
 						array(
 							'label'    => '<h1 class="wpcsass_title">' . $data['label'] . '</h1>',
 							'section'  => $data['section'],
-							'settings' => $setting_id
+							'settings' => $setting_id,
 						)
 					)
 				);
@@ -726,7 +726,7 @@ class WPC_Sass {
 						array(
 							'label'    => '<h3 class="wpcsass_subtitle">' . $data['label'] . '</h3>',
 							'section'  => $data['section'],
-							'settings' => $setting_id
+							'settings' => $setting_id,
 						)
 					)
 				);
@@ -740,7 +740,7 @@ class WPC_Sass {
 						array(
 							'description' => $data['description'],
 							'section'     => $data['section'],
-							'settings'    => $setting_id
+							'settings'    => $setting_id,
 						)
 					)
 				);
@@ -756,7 +756,7 @@ class WPC_Sass {
 							array(
 								'label'    => $data['label'],
 								'section'  => $data['section'],
-								'settings' => $setting_id
+								'settings' => $setting_id,
 							)
 						)
 					);
@@ -768,7 +768,7 @@ class WPC_Sass {
 							array(
 								'label'    => $data['label'],
 								'section'  => $data['section'],
-								'settings' => $setting_id
+								'settings' => $setting_id,
 							)
 						)
 					);
@@ -785,7 +785,7 @@ class WPC_Sass {
 							'section'  => $data['section'],
 							'settings' => $setting_id,
 							'type'     => $data['type'],
-							'choices'  => $data['choices']
+							'choices'  => $data['choices'],
 						)
 					)
 				);
@@ -801,7 +801,7 @@ class WPC_Sass {
 							'section'  => $data['section'],
 							'settings' => $setting_id,
 							'type'     => $data['type'],
-							'choices'  => $data['choices']
+							'choices'  => $data['choices'],
 						)
 					)
 				);
@@ -815,7 +815,7 @@ class WPC_Sass {
 						array(
 							'label'    => $data['label'],
 							'section'  => $data['section'],
-							'settings' => $setting_id
+							'settings' => $setting_id,
 						)
 					)
 				);
@@ -834,8 +834,8 @@ class WPC_Sass {
 							'input_attrs' => array(
 								'min'  => $data['range']['min'],
 								'max'  => $data['range']['max'],
-								'step' => $data['range']['step']
-							)
+								'step' => $data['range']['step'],
+							),
 						)
 					)
 				);
@@ -851,7 +851,7 @@ class WPC_Sass {
 							'section'  => $data['section'],
 							'settings' => $setting_id,
 							'type'     => $data['type'],
-							'default'  => $data['default']
+							'default'  => $data['default'],
 						)
 					)
 				);
@@ -869,23 +869,23 @@ class WPC_Sass {
 		$variables = array();
 		$var_dump = "";
 		foreach ( $this->settings as $setting_id => $data ) :
-			if ( $data['vardump'] === 'title' ) :
+			if ( 'title' === $data['vardump'] ) :
 				// Add label to string as comment.
 				$var_dump .= "\n// " . $data['label'] . "\n";
-			elseif ( $data['vardump'] === 'subtitle' ) :
+			elseif ( 'subtitle' === $data['vardump'] ) :
 				// Add label to string as comment.
 				$var_dump .= "// " . $data['label'] . "\n";
 			elseif ( array_key_exists( $data['type'], $this->section_shorthands ) ) :
 				continue;
 			elseif ( ! in_array( $data['type'], $this->comment_types ) ) :
 				// Get setting value
-				$value = $this->get_setting( $setting_id, true );
+				$value = $this->get_setting( $setting_id, 'show_reference' );
 
 				// Add value to results array
 				$variables[$setting_id] = $value;
 
 				// Add $ if it's a reference to another variable
-				if ( $data['vardump'] === 'inherit' ) :
+				if ( 'inherit' === $data['vardump'] ) :
 					$value = '$' . $value;
 				endif;
 
