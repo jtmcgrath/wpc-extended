@@ -654,6 +654,32 @@ class WPC_Sass {
 	}
 
 	/**
+	 * Get setting values as an array
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param bool $show_reference Reference a Sass variable instead of a value.
+	 */
+	public function get_settings( $show_reference = false ) {
+		$values = array();
+
+		foreach ( $this->settings as $setting_id => $data ) :
+			if (
+				array_key_exists( $data['type'], $this->section_shorthands ) ||
+				in_array( $data['type'], $this->comment_types )
+			) :
+				continue;
+			else :
+				// Add value to results array
+				$values[$setting_id] = $this->get_setting( $setting_id, $show_reference );
+			endif;
+		endforeach;
+
+		return $values;
+	}
+
+	/**
 	 * Registers the Customizer settings
 	 *
 	 * @since 1.0.0
@@ -862,12 +888,45 @@ class WPC_Sass {
 	/**
 	 * Compile Sass
 	 *
-	 * @param array $settings settings to pass to Sass
 	 * @since 1.0.0
+	 * @access public
 	 */
 	public function compile() {
-		$variables = array();
+		// Get setting values.
+		$values = $this->get_settings( 'show_reference' );
+
+		// Save vardump.
+		$this->save_vardump( $values );
+
+		// Load scssphp compiler.
+		require plugin_dir_path( __FILE__ ) . '/scssphp/scss.inc.php';
+		$scss = new Leafo\ScssPhp\Compiler;
+
+		// Set import directory.
+		$scss->setImportPaths( $this->file_sass_input_directory );
+
+		// Set variables.
+		$scss->setVariables( $values );
+
+		// Save css to file.
+		file_put_contents( $this->file_sass_output, $scss->compile( '@import "' . $this->sass_entry_point . '"' ) );
+	}
+
+	/**
+	 * Save values into vardump file
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param array $values Array of setting values.
+	 */
+	private function save_vardump( $values = null ) {
 		$var_dump = "";
+
+		if ( null === $values ) :
+			$values = $this->get_settings( 'show_reference' );
+		endif;
+
 		foreach ( $this->settings as $setting_id => $data ) :
 			if ( 'title' === $data['vardump'] ) :
 				// Add label to string as comment.
@@ -875,14 +934,9 @@ class WPC_Sass {
 			elseif ( 'subtitle' === $data['vardump'] ) :
 				// Add label to string as comment.
 				$var_dump .= "// " . $data['label'] . "\n";
-			elseif ( array_key_exists( $data['type'], $this->section_shorthands ) ) :
-				continue;
-			elseif ( ! in_array( $data['type'], $this->comment_types ) ) :
+			elseif ( array_key_exists( $setting_id, $values ) ) :
 				// Get setting value
-				$value = $this->get_setting( $setting_id, 'show_reference' );
-
-				// Add value to results array
-				$variables[$setting_id] = $value;
+				$value = $values[$setting_id];
 
 				// Add $ if it's a reference to another variable
 				if ( 'inherit' === $data['vardump'] ) :
@@ -896,25 +950,13 @@ class WPC_Sass {
 
 		// Save $var_dump to Sass dump file.
 		file_put_contents( $this->file_sass_vardump, $var_dump );
-
-		// Load scssphp compiler.
-		require plugin_dir_path( __FILE__ ) . '/scssphp/scss.inc.php';
-		$scss = new Leafo\ScssPhp\Compiler;
-
-		// Set import directory.
-		$scss->setImportPaths( $this->file_sass_input_directory );
-
-		// Set variables.
-		$scss->setVariables( $variables );
-
-		// Save css to file.
-		file_put_contents( $this->file_sass_output, $scss->compile( '@import "' . $this->sass_entry_point . '"' ) );
 	}
 
 	/**
 	 * Push CSS live
 	 *
 	 * @since 1.0.0
+	 * @access public
 	 */
 	public function push_live() {
 		// Get live css file path without the .css extension
@@ -935,6 +977,7 @@ class WPC_Sass {
 	 * Constructor
 	 *
 	 * @since 1.0.0
+	 * @access public
 	 */
 	public function __construct() {
 		$template_directory = get_stylesheet_directory();
