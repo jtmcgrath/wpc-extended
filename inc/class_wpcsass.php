@@ -639,10 +639,14 @@ class WPC_Sass {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param string $setting_id     Settings to retrieve.
-	 * @param bool   $show_reference Reference a Sass variable instead of a value.
+	 * @param string $setting_id Settings to retrieve.
+	 * @param bool   $options    Options.
 	 */
-	public function get_setting( $setting_id, $show_reference = false ) {
+	public function get_setting( $setting_id, $options = array() ) {
+		if ( is_string( $options ) ) :
+			$options = array( $options );
+		endif;
+
 		// If setting might inherit from another setting, check the inherit setting first.
 		if ( array_key_exists( $setting_id . '_inherit', $this->settings ) ) :
 			$_data = $this->settings[$setting_id . '_inherit'];
@@ -653,7 +657,7 @@ class WPC_Sass {
 			 * source, rather than print the value itself; for example if we want
 			 * one Sass variable to be an alias for another.
 			 */
-			if ( 'show_reference' === $show_reference && $setting_id !== $_setting_id ) {
+			if ( in_array( 'show_reference', $options ) && $setting_id !== $_setting_id ) {
 				return '$' . $_setting_id;
 			}
 
@@ -663,7 +667,7 @@ class WPC_Sass {
 		$data = $this->settings[$setting_id];
 		$value = get_theme_mod( $this->namespace . $setting_id, $data['default'] );
 
-		return $this->format_value( $value, $data );
+		return $this->format_value( $value, $data, $options );
 	}
 
 	/**
@@ -675,8 +679,12 @@ class WPC_Sass {
 	 * @param {*}   $value The setting's value.
 	 * @param array $data  The setting's data.
 	 */
-	private function format_value( $value, $data ) {
-		if ( 'image' === $data['type']  || 'textarea' === $data['type'] || '' === $value ) :
+	private function format_value( $value, $data, $options = array() ) {
+		if ( is_string( $options ) ) :
+			$options = array( $options );
+		endif;
+
+		if ( ! in_array( 'no_quotes', $options ) && ( 'image' === $data['type']  || 'textarea' === $data['type'] || '' === $value ) ) :
 			$value = "'" . $value . "'";
 		endif;
 
@@ -688,7 +696,7 @@ class WPC_Sass {
 			endif;
 		endif;
 
-		if ( isset( $data['units'] ) ) :
+		if ( ! in_array( 'no_units', $options ) && isset( $data['units'] ) ) :
 			$value .= $data['units'];
 		endif;
 
@@ -701,9 +709,13 @@ class WPC_Sass {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param bool $show_reference Reference a Sass variable instead of a value.
+	 * @param array $options Options to be passed on to the get_setting() method.
 	 */
-	public function get_settings( $show_reference = false ) {
+	public function get_settings( $options = array() ) {
+		if ( is_string( $options ) ) :
+			$options = array( $options );
+		endif;
+
 		$values = array();
 
 		foreach ( $this->settings as $setting_id => $data ) :
@@ -714,7 +726,7 @@ class WPC_Sass {
 				continue;
 			else :
 				// Add value to results array
-				$values[$setting_id] = $this->get_setting( $setting_id, $show_reference );
+				$values[$setting_id] = $this->get_setting( $setting_id, $options );
 			endif;
 		endforeach;
 
@@ -1083,7 +1095,7 @@ class WPC_Sass {
 		$this->set_live_stylesheet( 'style.css' );
 
 		add_action( 'customize_register', array( $this, 'register' ) );
-		add_action( 'customize_preview_init', array( $this, 'compile') );
+		add_action( 'customize_preview_init', array( $this, 'compile' ) );
 		add_action( 'customize_save_after', array( $this, 'compile' ) );
 		add_action( 'customize_save_after', array( $this, 'push_live' ), 11 );
 	}
