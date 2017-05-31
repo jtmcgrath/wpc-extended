@@ -680,7 +680,7 @@ class WPC_Sass {
 			$value = "'" . $value . "'";
 		endif;
 
-		if (  'checkbox' ===$data['type'] ) :
+		if (  'checkbox' === $data['type'] ) :
 			if ( $value ) :
 				$value = 'true';
 			else :
