@@ -38,15 +38,6 @@ class WPC_Sass {
 	public $sass_output_directory;
 
 	/**
-	 * Sass output directory uri.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $sass_output_directory_uri;
-
-	/**
 	 * Sass vardump file.
 	 *
 	 * @since 1.0.0
@@ -1061,18 +1052,17 @@ class WPC_Sass {
 	 * @access public
 	 */
 	public function push_live() {
+		$live_css_path = $this->get_path( 'live_css' );
+
 		// Get live css file path without the .css extension
-		$target = substr( $this->live_css, 0, -4 );
+		$target = substr( $live_css_path, 0, -4 );
 
 		for ($i = $this->css_backup_quantity; $i > 0; $i--) {
-			if ( $i > 1 ) {
-				$prev = '.backup' . ( $i - 1 );
-			} else {
-				$prev = '';
-			}
+			$prev = ( $i > 1 ) ? '.backup' . ( $i - 1 ) : '';
 			rename( "$target$prev.css", "$target.backup$i.css" );
 		}
-		copy( $this->get_path( 'sass_output' ), $this->get_path( 'live_css' ) );
+
+		copy( $this->get_path( 'sass_output' ), $live_css_path );
 	}
 
 	/**
