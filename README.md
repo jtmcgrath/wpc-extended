@@ -27,6 +27,8 @@ This experimental plugin allows user settings in the WordPress Customizer to aut
    - [Add Shorthand](#add-shorthand)
    - [Options Usage](#options-usage)
 5. [Using Settings In Theme Files](#use-settings-in-theme-files)
+   - [Get Setting](#get-setting)
+   - [Get Settings](#get-settings)
 6. [Available Controls](#available-controls)
    - [Inherit](#inherit)
    - [Presentation](#presentation) *- [Title](#title), [Description](#description), [Subtitle](#subtitle)*
@@ -412,6 +414,10 @@ endif;
 
 In addition to using settings in your Sass files, you can also use them in your theme's php files.
 
+### Get Setting
+
+Gets the value for a single setting.
+
 *Method*
 ```php
 $wpcsass->get_setting( $setting_id );
@@ -419,7 +425,21 @@ $wpcsass->get_setting( $setting_id );
 
 *Example*
 ```php
-$wpcsass->get_setting( 'my_setting' );
+$my_setting = $wpcsass->get_setting( 'my_setting' );
+```
+
+### Get Settings
+
+Gets an array containing values for all available settings.
+
+*Method*
+```php
+$wpcsass->get_settings();
+```
+
+*Example*
+```php
+$settings = $wpcsass->get_settings();
 ```
 
 ## Available Controls
