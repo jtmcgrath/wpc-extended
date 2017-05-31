@@ -9,6 +9,8 @@ This experimental plugin allows user settings in the WordPress Customizer to aut
 1. [How It Works](#how-it-works)
 2. [Default Configuration](#default-configuration)
 3. [Changing Settings](#changing-settings)
+   - [Set Sass Template Directory](#set-sass-template-directory)
+   - [Set Sass Template Directory URI](#set-sass-template-directory-uri)
    - [Set Sass Input Directory](#set-sass-input-directory)
    - [Set Sass Entry Point](#set-sass-entry-point)
    - [Set Sass Output Directory](#set-sass-output-directory)
@@ -29,6 +31,7 @@ This experimental plugin allows user settings in the WordPress Customizer to aut
 5. [Using Settings In Theme Files](#use-settings-in-theme-files)
    - [Get Setting](#get-setting)
    - [Get Settings](#get-settings)
+   - [Get Path](#get-path)
 6. [Available Controls](#available-controls)
    - [Inherit](#inherit)
    - [Presentation](#presentation) *- [Title](#title), [Description](#description), [Subtitle](#subtitle)*
@@ -67,13 +70,51 @@ By default, the plugin looks for a file located at `theme_directory/sass/style.s
 
 You can change several settings to customise the plugin. These are all method calls which change variables within the WPC_Sass object in order to change its behaviour.
 
-### Set Sass Input Directory
+### Set Sass Template Directory
 
-This setting controls the location of the directory which contains your non-compiled `scss` files.
+This setting controls the `local` root file path.
 
 *Default*
 ```
-stylesheet_directory/sass/
+stylesheet_directory
+```
+
+*Method*
+```php
+$wpcsass->set_template_directory( $directory );
+```
+
+*Example*
+```php
+$wpcsass->set_template_directory( get_stylesheet_directory() );
+```
+
+### Set Sass Template Directory URI
+
+This setting controls the `live` root file path.
+
+*Default*
+```
+stylesheet_directory_uri
+```
+
+*Method*
+```php
+$wpcsass->set_template_directory_uri( $directory );
+```
+
+*Example*
+```php
+$wpcsass->set_template_directory_uri( get_stylesheet_directory_uri() );
+```
+
+### Set Sass Input Directory
+
+This setting controls the location of the directory which contains your non-compiled `scss` files within the root folder.
+
+*Default*
+```
+sass
 ```
 
 *Method*
@@ -83,7 +124,7 @@ $wpcsass->set_sass_input_directory( $directory );
 
 *Example*
 ```php
-$wpcsass->set_sass_input_directory( get_stylesheet_directory() . '/sass/' );
+$wpcsass->set_sass_input_directory( 'sass' );
 ```
 
 ### Set Sass Entry point
@@ -107,11 +148,11 @@ $wpcsass->set_sass_entry_point( 'style.scss' );
 
 ### Set Sass Output Directory
 
-This setting controls the location of the directory into which the plugin places the generated `css` files.
+This setting controls the location of the directory into which the plugin places the generated `css` files within the root folder.
 
 *Default*
 ```
-stylesheet_directory/sass_output/
+sass_output
 ```
 
 *Method*
@@ -121,64 +162,64 @@ $wpcsass->set_sass_output_directory( $directory );
 
 *Example*
 ```php
-$wpcsass->set_sass_output_directory( get_stylesheet_directory() . '/sass_output/' );
+$wpcsass->set_sass_output_directory( 'sass_output' );
 ```
 
 ### Set Sass Vardump
 
-This setting controls the file location of the Sass vardump file. [Click here for a brief explanation of this file.](#sass-vardump)
+This setting controls the filename of the Sass vardump file. [Click here for a brief explanation of this file.](#sass-vardump)
 
 *Default*
 ```
-stylesheet_directory/sass/_customizer_variables.scss
+_customizer_variables.scss
 ```
 
 *Method*
 ```php
-$wpcsass->set_sass_vardump( $file );
+$wpcsass->set_sass_vardump( $filename );
 ```
 
 *Example*
 ```php
-$wpcsass->set_sass_vardump( get_stylesheet_directory() . '/sass/_customizer_variables.scss' );
+$wpcsass->set_sass_vardump( '_customizer_variables.scss' );
 ```
 
 ### Set Sass Output
 
-This setting controls the file location of the main output file which the plugin generates.
+This setting controls the filename of the main output file which the plugin generates.
 
 *Default*
 ```
-stylesheet_directory/sass_output/style.css
+style.css
 ```
 
 *Method*
 ```php
-$wpcsass->set_sass_output( $file );
+$wpcsass->set_sass_output( $filename );
 ```
 
 *Example*
 ```php
-$wpcsass->set_sass_output( get_stylesheet_directory() . '/sass_output/style.css' );
+$wpcsass->set_sass_output( 'style.css' );
 ```
 
 ### Set Live Stylesheet
 
-This setting controls the location of the live css file which the plugin overwrites when saving.
+This setting controls the filename of the live stylesheet which the plugin overwrites when saving.
 
 *Default*
 ```
-stylesheet_directory/style.css
+style.css
 ```
 
 *Method*
 ```php
-$wpcsass->set_live_stylesheet( $file );
+$wpcsass->set_live_stylesheet( $filename );
 ```
 
 *Example*
 ```php
-$wpcsass->set_live_stylesheet( get_stylesheet_directory() . '/style.css' );
+$wpcsass->set_live_stylesheet( 'style.css' );
 ```
 
 ### Set CSS Backup Quantity
@@ -416,7 +457,7 @@ In addition to using settings in your Sass files, you can also use them in your 
 
 ### Get Setting
 
-Gets the value for a single setting.
+Returns the value for a single setting.
 
 *Method*
 ```php
@@ -430,7 +471,7 @@ $my_setting = $wpcsass->get_setting( 'my_setting' );
 
 ### Get Settings
 
-Gets an array containing values for all available settings.
+Returns an array containing values for all available settings.
 
 *Method*
 ```php
@@ -441,6 +482,31 @@ $wpcsass->get_settings();
 ```php
 $settings = $wpcsass->get_settings();
 ```
+
+### Get path
+
+Returns the path to the requested file.
+
+*Method*
+```php
+$wpcsass->get_path( $file, $type );
+```
+
+*Example*
+```php
+$wpcsass->get_path( 'sass_output', 'live' );
+```
+
+*File Options*
+- 'input_directory'
+- 'vardump'
+- 'sass_output'
+- 'stylesheet'
+
+*Type Options*
+- 'live' (returns a uri)
+- 'local' (returns a local file path)
+
 
 ## Available Controls
 
