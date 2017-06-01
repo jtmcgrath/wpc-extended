@@ -119,6 +119,18 @@ class WPC_Sass {
 	public $settings = array();
 
 	/**
+	 * Conditional setting display types.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var array
+	 */
+	var $condition_types = array(
+		'visible_if',
+		'hidden_if',
+	);
+
+	/**
 	 * Comment setting types.
 	 *
 	 * @since 1.0.0
@@ -585,6 +597,13 @@ class WPC_Sass {
 				$_data['default'] = $setting_data['default'];
 			endif;
 
+			// Add conditional display logic.
+			foreach ( $this->condition_types as $type ) :
+				if ( array_key_exists( $type, $data ) ) :
+					$_data[ $type ] = $data[ $type ];
+				endif;
+			endforeach;
+
 			$this->settings[ $_setting_id ] = $_data;
 		endforeach;
 	}
@@ -614,6 +633,13 @@ class WPC_Sass {
 
 		// Add the current setting_id to the choices array as "Custom".
 		$_data['choices'][$setting_id] = 'Custom';
+
+		// Add conditional display logic.
+		foreach ( $this->condition_types as $type ) :
+			if ( array_key_exists( $type, $data ) ) :
+				$_data[ $type ] = $data[ $type ];
+			endif;
+		endforeach;
 
 		// Create inherit setting.
 		$this->settings[ $setting_id . '_inherit' ] = $_data;
@@ -731,6 +757,37 @@ class WPC_Sass {
 		endforeach;
 
 		return $values;
+	}
+
+	/**
+	 * Get the conditional logic for setting visibility.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 */
+	public function get_conditional_logic() {
+		$logic = array();
+
+		foreach ( $this->settings as $setting_id => $data ) :
+			foreach ( $this->condition_types as $type ) :
+				if ( array_key_exists( $type, $data ) ) :
+					if ( ! array_key_exists( $type, $logic ) ) :
+						$logic[$type] = array();
+					endif;
+
+					$condition = array(
+						'target'     => '#customize-control-' . $this->namespace . $setting_id,
+						'setting'    => '#customize-control-' . $this->namespace . $data[$type]['setting'],
+						'comparison' => $data[$type]['comparison'],
+						'value'      => $data[$type]['value'],
+					);
+
+					array_push( $logic[$type], $condition );
+				endif;
+			endforeach;
+		endforeach;
+
+		return $logic;
 	}
 
 	/**
