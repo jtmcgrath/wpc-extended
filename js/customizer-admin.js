@@ -85,6 +85,13 @@
 	}
 
 	function conditionalLogic( params ) {
+		/**
+		 * Since the conditional operator is passed to the function as a
+		 * string, we'd have to use eval() to run the comparison, which
+		 * is always a bad idea. Instead we can just compare the two
+		 * values first, and then check whether the comparison
+		 * matches the requested conditional logic.
+		 */
 		const equal = [ '==', '===', '>=', '<=' ];
 		const less = [ '!=', '!==', '>', '>=' ];
 		const more = [ '!=', '!==', '<', '<=' ];
