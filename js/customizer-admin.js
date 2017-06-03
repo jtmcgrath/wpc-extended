@@ -97,22 +97,29 @@
 		const more = [ '!=', '!==', '<', '<=' ];
 
 		let show = false;
+		let currentValue = null;
 		let settingElem = $( params.setting );
-		let input = 'input';
+		let classes = settingElem.attr('class').split(' ');
 
-		if ( settingElem.hasClass( 'customize-control-radio' ) ) {
-			input = 'input:checked';
+		if ( classes.includes( 'customize-control-checkbox' ) ) {
+			currentValue = settingElem.find( 'input' ).is( ":checked" ) ? 'true' : 'false';
+		} else if ( classes.includes( 'customize-control-image' ) ) {
+			currentValue = settingElem.find( '.thumbnail' ).length ? 'true' : 'false';
+		} else if ( classes.includes( 'customize-control-select' ) ) {
+			currentValue = settingElem.find( 'select' ).val();
+		} else if ( classes.includes( 'customize-control-textarea' ) ) {
+			currentValue = settingElem.find( 'textarea' ).val();
+		} else if ( classes.includes( 'customize-control-radio' ) ) {
+			currentValue = settingElem.find( 'input:checked' ).val();
+		} else {
+			currentValue = settingElem.find( 'input' ).val();
 		}
 
-		let currentValue = settingElem.find( input ).val();
-
-		if ( currentValue === params.value ) {
-			show = ( '===' === params.comparison );
-		} else if ( currentValue == params.value ) {
+		if ( params.value == currentValue ) {
 			show = equal.includes( params.comparison );
-		} else if ( currentValue < params.value ) {
+		} else if ( params.value < currentValue ) {
 			show = less.includes( params.comparison );
-		} else if ( currentValue < params.value ) {
+		} else if ( params.value > currentValue ) {
 			show = more.includes( params.comparison );
 		}
 
