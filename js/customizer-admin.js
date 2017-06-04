@@ -69,17 +69,17 @@
 		}
 	}
 
-	function elemHasPlaceholder( params ) {
-		// If the placeholder is visible it means that no image has been selected, so do not show controls.
-		return $( params.elem ).find( '.placeholder' ).length ? false : true;
+	function elemHasThumbnail( params ) {
+		// If a thumbnail exists it means that an image has been selected, so the controls should be visible.
+		return $( params.elem ).find( '.thumbnail' ).length ? true : false;
 	}
 
-	function elemHasValue( params ) {
+	function inputHasValue( params ) {
 		// If the input value is greater than zero, show controls.
 		return $( params.elem ).find( 'input[type="text"]' ).val() > 0 ? true : false;
 	}
 
-	function elemIsChecked( params ) {
+	function lastChildIsChecked( params ) {
 		// If the element is checked, show controls.
 		return $( params.elem ).find( 'label:last-child' ).find( 'input' ).is( ':checked' ) ? true : false;
 	}
@@ -99,7 +99,7 @@
 		let show = false;
 		let currentValue = null;
 		let settingElem = $( params.setting );
-		let classes = settingElem.attr('class').split(' ');
+		let classes = settingElem.attr( 'class' ).split( ' ' );
 
 		if ( classes.includes( 'customize-control-checkbox' ) ) {
 			currentValue = settingElem.find( 'input' ).is( ":checked" ) ? 'true' : 'false';
@@ -123,6 +123,7 @@
 			show = more.includes( params.comparison );
 		}
 
+		// Invert response if the type is not 'visible_if'.
 		return 'visible_if' === params.type ? show : ! show;
 	}
 
@@ -135,7 +136,7 @@
 			controls,
 			'.customize-control-image',
 			'_bgimage',
-			elemHasPlaceholder,
+			elemHasThumbnail,
 			[ '_bgrepeat', '_bgposition', '_bgattachment', '_bgsize' ],
 		);
 
@@ -143,7 +144,7 @@
 			controls,
 			'.customize-control-text',
 			'_borderwidth',
-			elemHasValue,
+			inputHasValue,
 			[ '_bordercolor', '_borderstyle' ],
 		);
 
@@ -151,7 +152,7 @@
 			controls,
 			'.customize-control',
 			'_inherit',
-			elemIsChecked,
+			lastChildIsChecked,
 			[ '' ],
 		);
 
