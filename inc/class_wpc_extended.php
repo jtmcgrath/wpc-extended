@@ -1,69 +1,6 @@
 <?php
-if ( ! class_exists( 'WPC_Sass' ) ) :
-class WPC_Sass {
-	/**
-	 * Template directory.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $template_directory;
-
-	/**
-	 * Template directory uri.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $template_directory_uri;
-
-	/**
-	 * Sass input directory.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $sass_input_directory;
-
-	/**
-	 * Sass output directory.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $sass_output_directory;
-
-	/**
-	 * Sass vardump file.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $sass_vardump;
-
-	/**
-	 * Sass output file.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $sass_output;
-
-	/**
-	 * Live css file.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $live_css;
-
+if ( ! class_exists( 'WPC_Extended' ) ) :
+class WPC_Extended {
 	/**
 	 * Namespace used for Customizer variables.
 	 *
@@ -71,25 +8,7 @@ class WPC_Sass {
 	 * @access private
 	 * @var string
 	 */
-	var $namespace = 'wpcsass_';
-
-	/**
-	 * Sass entry point.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $sass_entry_point = 'style.scss';
-
-	/**
-	 * CSS backup quantity.
-	 *
-	 * @since 1.0.0
-	 * @access private
-	 * @var int
-	 */
-	private $css_backup_quantity = 1;
+	var $namespace = 'wpc_extended_';
 
 	/**
 	 * Panels to be added to the Customizer.
@@ -316,114 +235,6 @@ class WPC_Sass {
 	);
 
 	/**
-	 * Sets template directory.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param string $path Template directory path.
-	 */
-	public function set_template_directory( $path ) {
-		$this->template_directory = $path;
-	}
-
-	/**
-	 * Sets template directory uri.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param string $path Template directory uri.
-	 */
-	public function set_template_directory_uri( $path ) {
-		$this->template_directory_uri = $path;
-	}
-
-	/**
-	 * Sets Sass entry point.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param string $filename Filename for the Sass entry point.
-	 */
-	public function set_sass_entry_point( $filename ) {
-		$this->sass_entry_point = $filename;
-	}
-
-	/**
-	 * Sets CSS backup quantity.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param int $quantity Number of css backup files to create.
-	 */
-	public function set_css_backup_quantity( $quantity ) {
-		$this->css_backup_quantity = $quantity;
-	}
-
-	/**
-	 * Sets Sass input directory.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param string $directory Location for the Sass input directory.
-	 */
-	public function set_sass_input_directory( $directory ) {
-		$this->sass_input_directory = $directory;
-	}
-
-	/**
-	 * Sets Sass output directory.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param string $directory Location for the Sass output directory.
-	 */
-	public function set_sass_output_directory( $directory ) {
-		$this->sass_output_directory = $directory;
-	}
-
-	/**
-	 * Sets Sass vardump file location.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param string $file Location for the Sass vardump file.
-	 */
-	public function set_sass_vardump( $file ) {
-		$this->sass_vardump = $file;
-	}
-
-	/**
-	 * Sets Sass output file location.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param string $file Location for the Sass output file.
-	 */
-	public function set_sass_output( $file ) {
-		$this->sass_output = $file;
-	}
-
-	/**
-	 * Sets live css file location.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param string $file Location for the live css file.
-	 */
-	public function set_live_stylesheet( $file ) {
-		$this->live_css = $file;
-	}
-
-	/**
 	 * Adds or updates a section shorthand.
 	 *
 	 * @since 1.0.0
@@ -446,7 +257,7 @@ class WPC_Sass {
 	 * @param int    $priority Priority of the panel.
 	 * @param string $title    Title of the panel.
 	 */
-	public function add_panel( $panel_id, $priority = 50, $title = null ) {
+	public function add_panel( $panel_id, $title = null, $priority = 50 ) {
 		if ( null === $title ) :
 			$title = $panel_id;
 		endif;
@@ -476,7 +287,7 @@ class WPC_Sass {
 				$data['title'] = null;
 			endif;
 
-			$this->add_panel( $panel_id, $data['priority'], $data['title'] );
+			$this->add_panel( $panel_id, $data['title'], $data['priority'] );
 			$i++;
 		endforeach;
 	}
@@ -492,7 +303,7 @@ class WPC_Sass {
 	 * @param string $title      Title of the section.
 	 * @param string $panel      Id of the panel the section belongs to.
 	 */
-	public function add_section( $section_id, $priority = 50, $title = null, $panel_id = null ) {
+	public function add_section( $section_id, $title = null, $panel_id = null, $priority = 50 ) {
 		if ( null === $title ) :
 			$title = $section_id;
 		endif;
@@ -526,12 +337,7 @@ class WPC_Sass {
 				$data['title'] = null;
 			endif;
 
-			if ( ! array_key_exists( 'panel', $data ) ) :
-				$this->add_panel( "WPC_Sass", 50, "WPC_Sass" );
-				$data['panel'] = "WPC_Sass";
-			endif;
-
-			$this->add_section( $section_id, $data['priority'], $data['title'], $data['panel'] );
+			$this->add_section( $section_id, $data['title'], $data['panel'], $data['priority'] );
 		endforeach;
 	}
 
@@ -791,57 +597,6 @@ class WPC_Sass {
 	}
 
 	/**
-	 * Get path for a directory or file.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @param string $request The requested directory or file.
-	 * @param book   $type The type of path.
-	 */
-	public function get_path( $request, $type = 'local' ) {
-		switch( $type ) :
-			case 'uri' :
-			case 'live' :
-				$path = $this->template_directory_uri;
-				break;
-
-			default :
-				$path = $this->template_directory;
-				break;
-		endswitch;
-
-		switch( $request ) :
-			case 'input_directory' :
-			case 'input directory' :
-				$path .= "/$this->sass_input_directory/";
-				break;
-
-			case 'vardump' :
-			case 'var_dump' :
-				$path .= "/$this->sass_input_directory/$this->sass_vardump";
-				break;
-
-			case 'sassoutput' :
-			case 'sass_output' :
-			case 'sass output' :
-			case 'output' :
-				$path .= "/$this->sass_output_directory/$this->sass_output";
-				break;
-
-			case 'stylesheet' :
-			case 'livecss' :
-			case 'live_css' :
-			case 'live css' :
-			case 'css' :
-				$path .= "/$this->live_css";
-				break;
-		endswitch;
-
-		return $path;
-	}
-
-	/**
 	 * Registers the Customizer settings.
 	 *
 	 * @since 1.0.0
@@ -894,11 +649,11 @@ class WPC_Sass {
 
 			case 'title' :
 				$wp_customize->add_control(
-					new WPCSASS_Insert_HTML(
+					new WPC_Extended_Insert_HTML(
 						$wp_customize,
 						$setting_id,
 						array(
-							'label'    => '<h1 class="wpcsass_title">' . $data['label'] . '</h1>',
+							'label'    => '<h1 class="wpc_extended_title">' . $data['label'] . '</h1>',
 							'section'  => $data['section'],
 							'settings' => $setting_id,
 						)
@@ -908,11 +663,11 @@ class WPC_Sass {
 
 			case 'subtitle' :
 				$wp_customize->add_control(
-					new WPCSASS_Insert_HTML(
+					new WPC_Extended_Insert_HTML(
 						$wp_customize,
 						$setting_id,
 						array(
-							'label'    => '<h3 class="wpcsass_subtitle">' . $data['label'] . '</h3>',
+							'label'    => '<h3 class="wpc_extended_subtitle">' . $data['label'] . '</h3>',
 							'section'  => $data['section'],
 							'settings' => $setting_id,
 						)
@@ -922,7 +677,7 @@ class WPC_Sass {
 
 			case 'description' :
 				$wp_customize->add_control(
-					new WPCSASS_Insert_HTML(
+					new WPC_Extended_Insert_HTML(
 						$wp_customize,
 						$setting_id,
 						array(
@@ -965,7 +720,7 @@ class WPC_Sass {
 
 			case 'radio' :
 				$wp_customize->add_control(
-					new WPCSASS_Radio(
+					new WPC_Extended_Radio(
 						$wp_customize,
 						$setting_id,
 						array(
@@ -1011,7 +766,7 @@ class WPC_Sass {
 
 			case 'range' :
 				$wp_customize->add_control(
-					new WPCSASS_Range(
+					new WPC_Extended_Range(
 						$wp_customize,
 						$setting_id,
 						array(
@@ -1048,90 +803,17 @@ class WPC_Sass {
 	}
 
 	/**
-	 * Compile Sass.
+	 * Using singleton pattern.
 	 *
 	 * @since 1.0.0
 	 * @access public
 	 */
-	public function compile() {
-		// Get setting values.
-		$values = $this->get_settings( 'show_reference' );
-
-		// Save vardump.
-		$this->save_vardump( $values );
-
-		// Load scssphp compiler.
-		require plugin_dir_path( __FILE__ ) . '/scssphp/scss.inc.php';
-		$scss = new Leafo\ScssPhp\Compiler;
-
-		// Set import directory.
-		$scss->setImportPaths( $this->get_path( 'input_directory' ) );
-
-		// Set variables.
-		$scss->setVariables( $values );
-
-		// Save css to file.
-		file_put_contents( $this->get_path( 'sass_output' ), $scss->compile( '@import "' . $this->sass_entry_point . '"' ) );
-	}
-
-	/**
-	 * Save values into vardump file.
-	 *
-	 * @since 1.0.0
-	 * @access private
-	 *
-	 * @param array $values Array of setting values.
-	 */
-	private function save_vardump( $values = null ) {
-		$var_dump = "";
-
-		if ( null === $values ) :
-			$values = $this->get_settings( 'show_reference' );
-		endif;
-
-		foreach ( $this->settings as $setting_id => $data ) :
-			if ( 'title' === $data['vardump'] ) :
-				// Add label to string as comment.
-				$var_dump .= "\n// " . $data['label'] . "\n";
-			elseif ( 'subtitle' === $data['vardump'] ) :
-				// Add label to string as comment.
-				$var_dump .= "// " . $data['label'] . "\n";
-			elseif ( array_key_exists( $setting_id, $values ) ) :
-				// Get setting value
-				$value = $values[$setting_id];
-
-				// Add $ if it's a reference to another variable
-				if ( 'inherit' === $data['vardump'] ) :
-					$value = '$' . $value;
-				endif;
-
-				// Add value to string.
-				$var_dump .= "\$$setting_id: $value;\n";
-			endif;
-		endforeach;
-
-		// Save $var_dump to Sass dump file.
-		file_put_contents( $this->get_path( 'vardump' ), $var_dump );
-	}
-
-	/**
-	 * Push CSS live.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function push_live() {
-		$live_css_path = $this->get_path( 'live_css' );
-
-		// Get live css file path without the .css extension
-		$target = substr( $live_css_path, 0, -4 );
-
-		for ($i = $this->css_backup_quantity; $i > 0; $i--) {
-			$prev = ( $i > 1 ) ? '.backup' . ( $i - 1 ) : '';
-			rename( "$target$prev.css", "$target.backup$i.css" );
+	public static function Instance() {
+		static $instance = null;
+		if ( $instance === null ) {
+			$instance = new WPC_Extended;
 		}
-
-		copy( $this->get_path( 'sass_output' ), $live_css_path );
+		return $instance;
 	}
 
 	/**
@@ -1141,21 +823,7 @@ class WPC_Sass {
 	 * @access public
 	 */
 	public function __construct() {
-		$this->set_template_directory( get_stylesheet_directory() );
-		$this->set_template_directory_uri( get_stylesheet_directory_uri() );
-
-		$this->set_sass_input_directory( 'sass' );
-		$this->set_sass_output_directory( 'sass_output' );
-
-		$this->set_sass_vardump( '_customizer_variables.scss' );
-		$this->set_sass_output( 'style.css' );
-		$this->set_live_stylesheet( 'style.css' );
-
 		add_action( 'customize_register', array( $this, 'register' ) );
-		add_action( 'customize_preview_init', array( $this, 'compile' ) );
-		add_action( 'customize_save_after', array( $this, 'compile' ) );
-		add_action( 'customize_save_after', array( $this, 'push_live' ), 11 );
 	}
 }
 endif;
-?>

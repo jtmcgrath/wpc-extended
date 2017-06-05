@@ -4,8 +4,8 @@ require plugin_dir_path( __FILE__ ) . 'alpha-color-picker/alpha-color-picker.php
 endif;
 
 
-if ( class_exists( 'WP_Customize_Control' ) && ! class_exists( 'WPCSASS_Insert_HTML' ) ) :
-class WPCSASS_Insert_HTML extends WP_Customize_Control {
+if ( class_exists( 'WP_Customize_Control' ) && ! class_exists( 'WPC_Extended_Insert_HTML' ) ) :
+class WPC_Extended_Insert_HTML extends WP_Customize_Control {
 	public $content = '';
 	public function render_content() {
 		if ( isset( $this->label ) ) :
@@ -23,8 +23,8 @@ endif;
 
 
 
-if ( class_exists( 'WP_Customize_Control' ) && ! class_exists( 'WPCSASS_Radio' ) ) :
-class WPCSASS_Radio extends WP_Customize_Control {
+if ( class_exists( 'WP_Customize_Control' ) && ! class_exists( 'WPC_Extended_Radio' ) ) :
+class WPC_Extended_Radio extends WP_Customize_Control {
 	public function render_content() {
 		if ( empty( $this->choices ) ) :
 			return;
@@ -34,7 +34,7 @@ class WPCSASS_Radio extends WP_Customize_Control {
 		$label = empty( $this->label ) ? '' : '<span class="customize-control-title">' . esc_html( $this->label ) . '</span>';
 		$description = empty( $this->description ) ? '' : '<span class="description customize-control-description">' .  $this->description . '</span>';
 		?>
-		<div class="wpcsass_radio <?php echo esc_html( $this-> id ); ?>">
+		<div class="wpc_extended_radio <?php echo esc_html( $this-> id ); ?>">
 			<?php echo $label; ?>
 			<?php echo $description; ?>
 			<?php foreach ( $this->choices as $value => $label ) : ?>
@@ -51,14 +51,14 @@ endif;
 
 
 
-if ( class_exists( 'WP_Customize_Control' ) && ! class_exists( 'WPCSASS_Range' ) ) :
-class WPCSASS_Range extends WP_Customize_Control {
+if ( class_exists( 'WP_Customize_Control' ) && ! class_exists( 'WPC_Extended_Range' ) ) :
+class WPC_Extended_Range extends WP_Customize_Control {
 	public function render_content() {
 		$label = empty( $this->label ) ? '' : '<span class="customize-control-title">' . esc_html( $this->label ) . '</span>';
 		$description = empty( $this->description ) ? '' : $this->description;
 
 		?>
-		<div class="wpcsass_range <?php echo esc_html( $this-> id ); ?>">
+		<div class="wpc_extended_range <?php echo esc_html( $this-> id ); ?>">
 			<?php echo $label; ?>
 			<label>
 				<input type="range" <?php $this->input_attrs(); ?> value="<?php echo esc_attr( $this->value() ); ?>" />
@@ -75,23 +75,24 @@ endif;
 
 
 
-if ( ! function_exists('wpcsass_customizer-admin-js') ) :
-function wpcsass_customizer() {
-	global $wpcsass;
-	wp_register_script( 'customizer-admin', plugins_url() . '/wpcsass/js/customizer-admin.js', array(), true, true );
-	wp_localize_script( 'customizer-admin', 'wpcsass_conditional_logic', $wpcsass->get_conditional_logic() );
+if ( ! function_exists('wpc_extended_customizer-admin-js') ) :
+function wpc_extended_customizer() {
+	$theme_settings = WPC_Extended::Instance();
+
+	wp_register_script( 'customizer-admin', plugins_url() . '/wpc-extended/js/customizer-admin.js', array(), true, true );
+	wp_localize_script( 'customizer-admin', 'wpc_extended_conditional_logic', $theme_settings->get_conditional_logic() );
 	wp_enqueue_script( 'customizer-admin' );
 }
-add_action( 'customize_controls_enqueue_scripts', 'wpcsass_customizer' );
+add_action( 'customize_controls_enqueue_scripts', 'wpc_extended_customizer' );
 endif;
 
 
 
-if ( ! function_exists( 'wpcsass_customizer_stylesheet' ) ) :
-function wpcsass_customizer_stylesheet() { ?>
+if ( ! function_exists( 'wpc_extended_customizer_stylesheet' ) ) :
+function wpc_extended_customizer_stylesheet() { ?>
 <style type="text/css">
-#customize-controls .wpcsass_title,
-#customize-controls .wpcsass_subtitle {
+#customize-controls .wpc_extended_title,
+#customize-controls .wpc_extended_subtitle {
   border-bottom: 1px solid rgba(0,0,0,0.1);
   color: #555;
   line-height: 1.2;
@@ -100,16 +101,16 @@ function wpcsass_customizer_stylesheet() { ?>
   text-align: center;
 }
 
-#customize-controls .wpcsass_subtitle {
+#customize-controls .wpc_extended_subtitle {
   color: #777;
 }
 
-#customize-controls .wpcsass_radio {
+#customize-controls .wpc_extended_radio {
   font-size: 0;
   margin-top: -16px;
 }
 
-#customize-controls .wpcsass_radio label {
+#customize-controls .wpc_extended_radio label {
   box-sizing: border-box;
   display: inline-block;
   font-size: 13px;
@@ -118,12 +119,12 @@ function wpcsass_customizer_stylesheet() { ?>
   width: 50%;
 }
 
-#customize-controls .wpcsass_radio input {
+#customize-controls .wpc_extended_radio input {
   display: none;
   visibility: hidden;
 }
 
-#customize-controls .wpcsass_radio label span {
+#customize-controls .wpc_extended_radio label span {
   display: block;
   font-size: inherit;
   height: auto;
@@ -133,20 +134,20 @@ function wpcsass_customizer_stylesheet() { ?>
   white-space: normal;
 }
 
-#customize-controls .wpcsass_radio :focus + span {
+#customize-controls .wpc_extended_radio :focus + span {
   border-color: #5b9dd9;
   -webkit-box-shadow: 0 0 3px rgba(0,115,170,.8);
   box-shadow: 0 0 3px rgba(0,115,170,.8);
 }
 
-#customize-controls .wpcsass_radio :checked + span {
+#customize-controls .wpc_extended_radio :checked + span {
   background: #eee;
   border-color: #999;
   -webkit-box-shadow: inset 0 2px 5px -3px rgba(0, 0, 0, .5);
   box-shadow: inset 0 2px 5px -3px rgba(0, 0, 0, .5);
 }
 
-#customize-controls .wpcsass_radio :checked + span:before {
+#customize-controls .wpc_extended_radio :checked + span:before {
   border: 2px solid #555;
   border-left: none;
   border-radius: 2px;
@@ -159,7 +160,7 @@ function wpcsass_customizer_stylesheet() { ?>
   transform: rotate(45deg);
 }
 
-#customize-controls .wpcsass_radio[class*='_bgposition'] label span {
+#customize-controls .wpc_extended_radio[class*='_bgposition'] label span {
   align-items: center;
   display: flex;
   height: 40px;
@@ -168,28 +169,28 @@ function wpcsass_customizer_stylesheet() { ?>
   justify-content: center;
 }
 
-#customize-controls .wpcsass_radio[class*='_bgposition'] :checked + span {
+#customize-controls .wpc_extended_radio[class*='_bgposition'] :checked + span {
   text-align: left;
 }
 
-#customize-controls .wpcsass_radio label:first-of-type:nth-last-of-type(3n),
-#customize-controls .wpcsass_radio label:first-of-type:nth-last-of-type(3n) ~ label {
+#customize-controls .wpc_extended_radio label:first-of-type:nth-last-of-type(3n),
+#customize-controls .wpc_extended_radio label:first-of-type:nth-last-of-type(3n) ~ label {
   font-size: 13px;
   width: 33%;
   width: calc(100% / 3);
 }
 
-#customize-controls .wpcsass_range label {
+#customize-controls .wpc_extended_range label {
   align-items: center;
   display: flex;
 }
 
-#customize-controls .wpcsass_range label input {
+#customize-controls .wpc_extended_range label input {
   cursor: pointer;
   flex: 1 1 100%;
 }
 
-#customize-controls .wpcsass_range label div {
+#customize-controls .wpc_extended_range label div {
   background: #f7f7f7;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -200,7 +201,7 @@ function wpcsass_customizer_stylesheet() { ?>
   white-space: nowrap;
 }
 
-#customize-controls .wpcsass_range label div:before {
+#customize-controls .wpc_extended_range label div:before {
   background: inherit;
   border: inherit;
   border-top: none;
@@ -216,7 +217,7 @@ function wpcsass_customizer_stylesheet() { ?>
   transform: rotate(45deg);
 }
 
-#customize-controls .wpcsass_range label div input {
+#customize-controls .wpc_extended_range label div input {
   background: transparent;
   border: 1px solid transparent;
   border-radius: 3px;
@@ -230,7 +231,7 @@ function wpcsass_customizer_stylesheet() { ?>
   width: 40px;
 }
 
-#customize-controls .wpcsass_range label div input:focus {
+#customize-controls .wpc_extended_range label div input:focus {
   -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
   border-color: #ddd;
   box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
@@ -242,6 +243,6 @@ function wpcsass_customizer_stylesheet() { ?>
 </style>
 <?php
 }
-add_action( 'customize_controls_print_styles', 'wpcsass_customizer_stylesheet' );
+add_action( 'customize_controls_print_styles', 'wpc_extended_customizer_stylesheet' );
 endif;
 ?>

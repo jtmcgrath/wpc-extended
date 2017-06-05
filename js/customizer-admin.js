@@ -156,8 +156,8 @@
 			[ '' ],
 		);
 
-		Object.keys( wpcsass_conditional_logic ).forEach( function( type ) {
-			wpcsass_conditional_logic[ type ].forEach( function( setting ) {
+		Object.keys( wpc_extended_conditional_logic ).forEach( function( type ) {
+			wpc_extended_conditional_logic[ type ].forEach( function( setting ) {
 				controls = addControl(
 					controls,
 					type,
@@ -186,7 +186,7 @@
 		} );
 
 		// The custom range control includes dual inputs, so we want to tie their values together.
-		$( '#customize-theme-controls' ).find( '.wpcsass_range' ).each( function() {
+		$( '#customize-theme-controls' ).find( '.wpc_extended_range' ).each( function() {
 			// When either input is changed...
 			$( this ).find( 'input' ).on( 'input change', function() {
 				// ...we get its value...

@@ -1,7 +1,7 @@
 <?php
 /*
-* Plugin Name: WPCSASS
-* Description: A plugin which passes Customizer variables to Sass.
+* Plugin Name: WPC Extended
+* Description: A plugin which extends the WordPress Customizer.
 * Author: Joe McGrath
 * Version: 1.0.0
 * Author URI: http://www.jmcgrath.co.uk
@@ -11,12 +11,12 @@
 
 if ( ! defined( "ABSPATH" ) ) exit; // Exit if accessed directly.
 
-require_once plugin_dir_path( __FILE__ ) . 'inc/class_wpcsass.php';
+require_once plugin_dir_path( __FILE__ ) . 'inc/class_wpc_extended.php';
 
-function wpcsass_init() {
+function wpc_extended_init() {
 	if ( is_customize_preview() ) :
 		require_once plugin_dir_path( __FILE__ ) . 'inc/custom_controls.php';
 	endif;
 }
-add_action('wp_loaded', 'wpcsass_init');
+add_action('wp_loaded', 'wpc_extended_init');
 ?>
