@@ -17,6 +17,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 The [WPC Extended Sass](https://github.com/jtmcgrath/wpc-extended-sass) child plugin adds automatic Sass export to **WPC Extended**. With both plugins installed, any customizer settings are compiled directly to Sass, and the live stylesheet is updated when the customizer settings are saved. [Check out the child plugin repo for more information.](https://github.com/jtmcgrath/wpc-extended-sass)
 
+## Documentation
+
+The documentation only applies to the old structure of the plugin, before the Sass export functions were moved into a separate extension. Since I'm moving to a different country in the next few weeks, it might take a little while before I can fix this, but it will happen at some point! The old docs are now available in the [old-documentation](https://github.com/jtmcgrath/wpc-extended/tree/master/old-documentation) folder.
+
 ## Built With
 
 - [Alpha Color Picker](https://github.com/BraadMartin/components/tree/master/customizer/alpha-color-picker) - Alpha colour picker Customizer control.
