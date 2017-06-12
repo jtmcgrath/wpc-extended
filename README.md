@@ -9,17 +9,21 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installation
 
 1. Install and activate the plugin.
-2. Add customizer options in your theme's `functions.php` file.
+2. Add customizer options in your theme's `functions.php` file. [Directions available in the wiki.](https://github.com/jtmcgrath/wpc-extended/wiki/Options)
+
+## [Wiki](https://github.com/jtmcgrath/wpc-extended/wiki)
+
+- [**Guide**: Detailed, step-by-step instructions on how to configure the plugin using a simple example.](https://github.com/jtmcgrath/wpc-extended/wiki/Guide)
+- [**Options**: A list of all available options.](https://github.com/jtmcgrath/wpc-extended/wiki/Options)
+- [**Controls**: A list of all available controls.](https://github.com/jtmcgrath/wpc-extended/wiki/Controls)
+- [**Using Settings**: A list of methods which allow you to access the Customizer settings in php files.](https://github.com/jtmcgrath/wpc-extended/wiki/Using-Settings)
+- [**Comprehensive Example**: Example code for a theme's `functions.php` file demonstrating all available controls.](https://github.com/jtmcgrath/wpc-extended/wiki/Comprehensive-Example)
 
 ## Plugin Extensions
 
 ### [Automatic Sass Export](https://github.com/jtmcgrath/wpc-extended-sass)
 
 The [WPC Extended Sass](https://github.com/jtmcgrath/wpc-extended-sass) child plugin adds automatic Sass export to **WPC Extended**. With both plugins installed, any customizer settings are compiled directly to Sass, and the live stylesheet is updated when the customizer settings are saved. [Check out the child plugin repo for more information.](https://github.com/jtmcgrath/wpc-extended-sass)
-
-## Documentation
-
-The documentation only applies to the old structure of the plugin, before the Sass export functions were moved into a separate extension. Since I'm moving to a different country in the next few weeks, it might take a little while before I can fix this, but it will happen at some point! The old docs are now available in the [old-documentation](https://github.com/jtmcgrath/wpc-extended/tree/master/old-documentation) folder.
 
 ## Built With
 
