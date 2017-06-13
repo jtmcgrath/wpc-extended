@@ -13,11 +13,15 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## [Wiki](https://github.com/jtmcgrath/wpc-extended/wiki)
 
-- [**Guide**: Detailed, step-by-step instructions on how to configure the plugin using a simple example.](https://github.com/jtmcgrath/wpc-extended/wiki/Guide)
-- [**Options**: A list of all available options.](https://github.com/jtmcgrath/wpc-extended/wiki/Options)
-- [**Controls**: A list of all available controls.](https://github.com/jtmcgrath/wpc-extended/wiki/Controls)
-- [**Using Settings**: A list of methods which allow you to access the Customizer settings in php files.](https://github.com/jtmcgrath/wpc-extended/wiki/Using-Settings)
-- [**Comprehensive Example**: Example code for a theme's `functions.php` file demonstrating all available controls.](https://github.com/jtmcgrath/wpc-extended/wiki/Comprehensive-Example)
+[**Guide**](https://github.com/jtmcgrath/wpc-extended/wiki/Guide) - Detailed, step-by-step instructions on how to configure the plugin using a simple example.
+
+[**Options**](https://github.com/jtmcgrath/wpc-extended/wiki/Options) - A list of all available options.
+
+[**Controls**](https://github.com/jtmcgrath/wpc-extended/wiki/Controls) - A list of all available controls.
+
+[**Using Settings**](https://github.com/jtmcgrath/wpc-extended/wiki/Using-Settings) - A list of methods which allow you to access the Customizer settings in php files.
+
+[**Comprehensive Example**](https://github.com/jtmcgrath/wpc-extended/wiki/Comprehensive-Example) - Example code for a theme's `functions.php` file demonstrating all available controls.
 
 ## Plugin Extensions
 
