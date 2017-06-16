@@ -559,6 +559,18 @@ class WPC_Extended {
 			else :
 				// Add value to results array
 				$values[$setting_id] = $this->get_setting( $setting_id, $options );
+
+				// If setting is an image upload form, get dimensions
+				if ( $data['type'] === 'image' ) {
+					if ( $values[$setting_id] === "''" || empty ( $values[$setting_id] ) ) :
+						$size = [ 0, 0 ];
+					else :
+						$size = getimagesize( $this->get_setting( $setting_id, [ 'no_quotes' ] ) );
+					endif;
+
+					$values[$setting_id . '_width'] = $size[0];
+					$values[$setting_id . '_height'] = $size[1];
+				}
 			endif;
 		endforeach;
 

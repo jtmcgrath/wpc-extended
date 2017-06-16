@@ -75,7 +75,7 @@ endif;
 
 
 
-if ( ! function_exists('wpc_extended_customizer_script') ) :
+if ( ! function_exists( 'wpc_extended_customizer_script' ) ) :
 function wpc_extended_customizer_script() {
 	$theme_settings = WPC_Extended::Instance();
 
@@ -83,7 +83,7 @@ function wpc_extended_customizer_script() {
 	wp_localize_script( 'customizer-admin', 'wpc_extended_conditional_logic', $theme_settings->get_conditional_logic() );
 	wp_enqueue_script( 'customizer-admin' );
 }
-add_action( 'customize_controls_enqueue_scripts', 'wpc_extended_customizer_script' );
+add_action( 'customize_controls_enqueue_scripts', 'wpc_extended_customizer_script', 10 );
 endif;
 
 
