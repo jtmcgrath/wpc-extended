@@ -75,15 +75,15 @@ endif;
 
 
 
-if ( ! function_exists('wpc_extended_customizer-admin-js') ) :
-function wpc_extended_customizer() {
+if ( ! function_exists('wpc_extended_customizer_script') ) :
+function wpc_extended_customizer_script() {
 	$theme_settings = WPC_Extended::Instance();
 
 	wp_register_script( 'customizer-admin', plugins_url() . '/wpc-extended/js/customizer-admin.js', array(), true, true );
 	wp_localize_script( 'customizer-admin', 'wpc_extended_conditional_logic', $theme_settings->get_conditional_logic() );
 	wp_enqueue_script( 'customizer-admin' );
 }
-add_action( 'customize_controls_enqueue_scripts', 'wpc_extended_customizer' );
+add_action( 'customize_controls_enqueue_scripts', 'wpc_extended_customizer_script' );
 endif;
 
 
